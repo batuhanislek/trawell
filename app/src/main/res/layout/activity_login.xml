@@ -16,16 +16,19 @@
         android:layout_marginBottom="40dp" />
 
     <EditText
+        android:id="@+id/login_email"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="E-mail"/>
 
     <EditText
+        android:id="@+id/login_password"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Password"/>
 
     <Button
+        android:id="@+id/button_login"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="25dp"
@@ -34,6 +37,15 @@
         android:textColor="@android:color/white"
         android:background="@color/successGreen"
         android:text="Login"
+        />
+
+    <ProgressBar
+        android:id="@+id/login_progressbar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="10dp"
+        android:visibility="invisible"
         />
 
 </LinearLayout>

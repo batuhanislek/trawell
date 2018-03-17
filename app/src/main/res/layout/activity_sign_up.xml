@@ -8,6 +8,7 @@
 
 
     <TextView
+        android:id="@+id/signup_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Sign Up With Email"
@@ -15,24 +16,32 @@
         android:textStyle="bold"
         android:textColor="@android:color/black"
         android:textAppearance="@style/TextAppearance.AppCompat.Display1"
-        android:layout_marginBottom="40dp" />
+        android:layout_marginBottom="40dp"
+        />
 
     <EditText
+        android:id="@+id/signup_username"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Username"/>
+        android:hint="Username"
+        />
 
     <EditText
+        android:id="@+id/signup_email"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="E-mail"/>
+        android:hint="E-mail"
+        />
 
     <EditText
+        android:id="@+id/signup_password"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Password"/>
+        android:hint="Password"
+        />
 
     <Button
+        android:id="@+id/signup_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="25dp"
@@ -41,6 +50,15 @@
         android:textColor="@android:color/white"
         android:background="@color/successGreen"
         android:text="Sign Up"
+        />
+    
+    <ProgressBar
+        android:id="@+id/signup_progressbar"
+        android:visibility="invisible"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="10dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         />
 
 
