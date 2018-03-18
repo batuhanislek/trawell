@@ -75,7 +75,9 @@
                 android:layout_alignParentBottom="true"
                 android:layout_alignParentRight="true"
                 android:background="@android:color/transparent"
-                android:text="SKIP >"
+                android:text="SKIP"
+                android:padding="16dp"
+                android:drawableRight="@drawable/ic_keyboard_arrow_right_black_24dp"
                 android:textColor="@android:color/black" />
 
         </RelativeLayout>

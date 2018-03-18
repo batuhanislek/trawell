@@ -111,9 +111,9 @@ public class SignUpActivity extends AppCompatActivity {
                 if(task.isSuccessful()) {
                     FirebaseUser user = mAuth.getCurrentUser();
                     String uid = user.getUid();
-                    userRef.child(uid);
                     userRef.child(uid).setValue(new User(username, email));
                     progressBar.setVisibility(View.INVISIBLE);
+                    FirebaseAuth.getInstance().signOut();
                     Toast.makeText(getApplicationContext(),"User registered Successfully !", Toast.LENGTH_SHORT).show();
                     Intent loginActivityIntent = new Intent(getApplicationContext(),LoginActivity.class);
                     startActivity(loginActivityIntent);
