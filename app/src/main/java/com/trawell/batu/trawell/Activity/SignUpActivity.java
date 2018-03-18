@@ -1,7 +1,9 @@
-package com.trawell.batu.trawell;
+package com.trawell.batu.trawell.Activity;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Patterns;
@@ -11,12 +13,24 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import com.google.android.gms.internal.kx;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthUserCollisionException;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.UserInfo;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.trawell.batu.trawell.Activity.LoginActivity;
+import com.trawell.batu.trawell.Model.User;
+import com.trawell.batu.trawell.R;
+
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.List;
 
 public class SignUpActivity extends AppCompatActivity {
 
@@ -28,6 +42,9 @@ public class SignUpActivity extends AppCompatActivity {
     public Button signup_button;
 
     private FirebaseAuth mAuth;
+    private FirebaseAuth.AuthStateListener mAuthListener;
+    private DatabaseReference mDatabase;
+    private DatabaseReference userRef;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +58,7 @@ public class SignUpActivity extends AppCompatActivity {
         progressBar = findViewById(R.id.signup_progressbar);
 
         mAuth = FirebaseAuth.getInstance();
+        userRef = FirebaseDatabase.getInstance().getReference("Users");
 
         signup_button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -51,9 +69,9 @@ public class SignUpActivity extends AppCompatActivity {
     }
 
     private void registerUser() {
-        String username = editTextUsername.getText().toString().trim();
-        String email = editTextEmail.getText().toString().trim();
-        String password = editTextPassword.getText().toString().trim();
+        final String username = editTextUsername.getText().toString().trim();
+        final String email = editTextEmail.getText().toString().trim();
+        final String password = editTextPassword.getText().toString().trim();
 
         if(username.isEmpty()) {
             editTextUsername.setError("Username is required !");
@@ -91,6 +109,10 @@ public class SignUpActivity extends AppCompatActivity {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if(task.isSuccessful()) {
+                    FirebaseUser user = mAuth.getCurrentUser();
+                    String uid = user.getUid();
+                    userRef.child(uid);
+                    userRef.child(uid).setValue(new User(username, email));
                     progressBar.setVisibility(View.INVISIBLE);
                     Toast.makeText(getApplicationContext(),"User registered Successfully !", Toast.LENGTH_SHORT).show();
                     Intent loginActivityIntent = new Intent(getApplicationContext(),LoginActivity.class);

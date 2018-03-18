@@ -1,4 +1,4 @@
-package com.trawell.batu.trawell;
+package com.trawell.batu.trawell.Activity;
 
 import android.content.Intent;
 import android.support.annotation.NonNull;
@@ -15,6 +15,8 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.trawell.batu.trawell.R;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -81,10 +83,11 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if(task.isSuccessful()) {
+                    finish();
                     loginProgressBar.setVisibility(View.INVISIBLE);
                     Toast.makeText(getApplicationContext(),"Login Successfull !",Toast.LENGTH_SHORT).show();
                     Intent homeActivityIntent = new Intent(LoginActivity.this,HomeActivity.class);
-                    homeActivityIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    homeActivityIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                     startActivity(homeActivityIntent);
                 } else {
                     loginProgressBar.setVisibility(View.INVISIBLE);
