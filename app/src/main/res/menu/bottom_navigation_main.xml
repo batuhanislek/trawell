@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/nav_home"
+        android:enabled="true"
+        android:icon="@drawable/ic_home_black_24dp"
+        android:title="Home"
+        app:showAsAction="ifRoom" />
+
+    <item
+        android:id="@+id/nav_discover"
+        android:enabled="true"
+        android:title="Discover"
+        android:icon="@drawable/ic_search_black_24dp"
+        app:showAsAction="ifRoom" />
+
+    <item
+        android:id="@+id/add_action"
+        android:enabled="true"
+        android:title="Add Action"
+        android:icon="@drawable/ic_add_circle_outline_black_40dp"
+        app:showAsAction="ifRoom" />
+
+    <item
+        android:id="@+id/nav_current"
+        android:enabled="true"
+        android:title="Current Travel"
+        android:icon="@drawable/ic_airplanemode_active_black_24dp"
+        app:showAsAction="ifRoom" />
+
+    <item
+        android:id="@+id/nav_profile"
+        android:enabled="true"
+        android:title="Profile"
+        android:icon="@drawable/ic_person_black_24dp"
+        app:showAsAction="ifRoom" />
+</menu>

@@ -78,25 +78,21 @@ public class SignUpActivity extends AppCompatActivity {
             editTextUsername.requestFocus();
             return;
         }
-
         if(email.isEmpty()) {
             editTextEmail.setError("E-mail is required !");
             editTextEmail.requestFocus();
             return;
         }
-
         if(!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
             editTextEmail.setError("Please enter a valid email !");
             editTextEmail.requestFocus();
             return;
         }
-
         if(password.isEmpty()) {
             editTextPassword.setError("Password is required !");
             editTextPassword.requestFocus();
             return;
         }
-
         if(password.length() < 6) {
             editTextPassword.setError("Password length should be minimum 6 characters !");
             editTextPassword.requestFocus();
