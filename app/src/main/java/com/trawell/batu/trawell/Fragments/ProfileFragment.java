@@ -1,10 +1,7 @@
 package com.trawell.batu.trawell.Fragments;
 
-import android.content.Context;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,7 +11,6 @@ import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.trawell.batu.trawell.Activity.HomeActivity;
 import com.trawell.batu.trawell.Activity.MainActivity;
 import com.trawell.batu.trawell.R;
 
@@ -32,7 +28,7 @@ public class ProfileFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.profile_fragment, container, false);
+        View view = inflater.inflate(R.layout.fragment_profile, container, false);
         signOutButton = view.findViewById(R.id.signout_button);
 
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();

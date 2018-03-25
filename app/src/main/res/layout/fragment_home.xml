@@ -1,0 +1,72 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context="com.trawell.batu.trawell.Fragments.HomeFragment">
+
+    <RelativeLayout
+        android:id="@+id/toolbar_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/my_toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@android:color/white"
+            android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
+            app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
+            <RelativeLayout
+                android:id="@+id/actionbar_home"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <ImageButton
+                    android:id="@+id/new_trip_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:tint="@android:color/black"
+                    android:layout_centerVertical="true"
+                    android:background="@android:color/transparent"
+                    android:src="@drawable/add_30dp"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_height="wrap_content"
+                    android:text="trawell"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+                    android:textColor="@android:color/holo_blue_light" />
+
+                <ImageButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:tint="@android:color/black"
+                    android:layout_centerVertical="true"
+                    android:paddingRight="10dp"
+                    android:background="@android:color/transparent"
+                    android:src="@drawable/notification_30dp"/>
+
+            </RelativeLayout>
+        </android.support.v7.widget.Toolbar>
+
+        <View
+            android:id="@+id/bar_line"
+            android:layout_width="match_parent"
+            android:layout_gravity="center"
+            android:layout_below="@+id/my_toolbar"
+            android:layout_height="1dp"
+            android:background="#A4A4A4" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/bar_line"
+            android:gravity="center"
+            android:text="Home Fragment" />
+
+    </RelativeLayout>
+
+</FrameLayout>

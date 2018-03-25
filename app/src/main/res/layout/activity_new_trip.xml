@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="15dp"
+    tools:context="com.trawell.batu.trawell.Activity.NewTrip">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:textColor="@android:color/black"
+        android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+        android:text="Create a Journey "/>
+
+    <ImageButton
+        android:id="@+id/close_newtrip_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:tint="@android:color/black"
+        android:layout_alignParentRight="true"
+        android:background="@android:color/transparent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:paddingBottom="10dp"
+        android:src="@drawable/close_24dp"/>
+
+    <View
+        android:id="@+id/new_trip_line"
+        android:layout_width="wrap_content"
+        android:layout_below="@id/close_newtrip_button"
+        android:layout_height="1dp"
+        android:layout_marginBottom="20dp"
+        android:background="#A4A4A4" />
+
+    <TextView
+        android:id="@+id/trip_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingTop="10dp"
+        style="@style/TextAppearance.AppCompat.Small"
+        android:textStyle="bold"
+        android:layout_below="@id/new_trip_line"
+        android:text="Trip name" />
+
+    <EditText
+        android:id="@+id/trip_name_edit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/trip_name"/>
+
+    <Button
+        android:id="@+id/save"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="@color/successGreen"
+        android:textColor="@android:color/white"
+        android:textAllCaps="false"
+        android:text="Save"/>
+
+
+
+
+
+
+
+
+
+
+</RelativeLayout>

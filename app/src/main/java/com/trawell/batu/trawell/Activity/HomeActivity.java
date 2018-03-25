@@ -1,5 +1,6 @@
 package com.trawell.batu.trawell.Activity;
 
+
 import android.support.v4.app.FragmentTransaction;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
@@ -9,6 +10,8 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.TextView;
+
+
 
 
 import com.trawell.batu.trawell.Fragments.ActionFragment;
@@ -22,7 +25,6 @@ public class HomeActivity extends AppCompatActivity {
 
     public Button signoutButton;
     public TextView name;
-    private ActionBar toolbar;
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -69,7 +71,6 @@ public class HomeActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
-
 
         BottomNavigationView navigationBar = (BottomNavigationView) findViewById(R.id.bottom_navigation);
         navigationBar.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
