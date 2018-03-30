@@ -23,7 +23,6 @@ public class CurrentFragment extends Fragment {
                              Bundle savedInstanceState) {
 
 
-
         View view = inflater.inflate(R.layout.fragment_current, container, false);
         actionBar = view.findViewById(R.id.toolbar_layout);
         return view;

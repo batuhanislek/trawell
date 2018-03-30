@@ -12,8 +12,6 @@ import android.widget.Button;
 import android.widget.TextView;
 
 
-
-
 import com.trawell.batu.trawell.Fragments.ActionFragment;
 import com.trawell.batu.trawell.Fragments.HomeFragment;
 import com.trawell.batu.trawell.Fragments.CurrentFragment;
@@ -35,31 +33,31 @@ public class HomeActivity extends AppCompatActivity {
                 case R.id.nav_home:
                     HomeFragment fragmentHome = new HomeFragment();
                     FragmentTransaction fragmentTransactionHome = getSupportFragmentManager().beginTransaction();
-                    fragmentTransactionHome.replace(R.id.frame_layout, fragmentHome,"FragmentName");
+                    fragmentTransactionHome.replace(R.id.frame_layout, fragmentHome, "FragmentName");
                     fragmentTransactionHome.commit();
                     return true;
                 case R.id.nav_discover:
                     DiscoverFragment fragmentDiscover = new DiscoverFragment();
                     FragmentTransaction fragmentTransactionDiscover = getSupportFragmentManager().beginTransaction();
-                    fragmentTransactionDiscover.replace(R.id.frame_layout, fragmentDiscover,"FragmentName");
+                    fragmentTransactionDiscover.replace(R.id.frame_layout, fragmentDiscover, "FragmentName");
                     fragmentTransactionDiscover.commit();
                     return true;
                 case R.id.add_action:
                     ActionFragment fragmentAction = new ActionFragment();
                     FragmentTransaction fragmentTransactionAction = getSupportFragmentManager().beginTransaction();
-                    fragmentTransactionAction.replace(R.id.frame_layout, fragmentAction,"FragmentName");
+                    fragmentTransactionAction.replace(R.id.frame_layout, fragmentAction, "FragmentName");
                     fragmentTransactionAction.commit();
                     return true;
                 case R.id.nav_current:
                     CurrentFragment fragmentCurrent = new CurrentFragment();
                     FragmentTransaction fragmentTransactionCurrent = getSupportFragmentManager().beginTransaction();
-                    fragmentTransactionCurrent.replace(R.id.frame_layout, fragmentCurrent,"HomeFragment");
+                    fragmentTransactionCurrent.replace(R.id.frame_layout, fragmentCurrent, "HomeFragment");
                     fragmentTransactionCurrent.commit();
                     return true;
                 case R.id.nav_profile:
                     ProfileFragment fragmentProfile = new ProfileFragment();
                     FragmentTransaction fragmentTransactionProfile = getSupportFragmentManager().beginTransaction();
-                    fragmentTransactionProfile.replace(R.id.frame_layout, fragmentProfile,"HomeFragment");
+                    fragmentTransactionProfile.replace(R.id.frame_layout, fragmentProfile, "HomeFragment");
                     fragmentTransactionProfile.commit();
                     return true;
             }
@@ -77,7 +75,7 @@ public class HomeActivity extends AppCompatActivity {
 
         HomeFragment fragmentHome = new HomeFragment();
         FragmentTransaction fragmentTransactionHome = getSupportFragmentManager().beginTransaction();
-        fragmentTransactionHome.replace(R.id.frame_layout, fragmentHome,"HomeFragment");
+        fragmentTransactionHome.replace(R.id.frame_layout, fragmentHome, "HomeFragment");
         fragmentTransactionHome.commit();
 
     }

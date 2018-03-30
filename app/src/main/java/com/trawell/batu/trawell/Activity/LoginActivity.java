@@ -21,7 +21,7 @@ import com.trawell.batu.trawell.R;
 public class LoginActivity extends AppCompatActivity {
 
     private EditText editTextEmail,
-                     editTextPassword;
+            editTextPassword;
 
     public Button login_button;
     public ProgressBar loginProgressBar;
@@ -53,25 +53,25 @@ public class LoginActivity extends AppCompatActivity {
         String email = editTextEmail.getText().toString().trim();
         String password = editTextPassword.getText().toString().trim();
 
-        if(email.isEmpty()) {
+        if (email.isEmpty()) {
             editTextEmail.setError("E-mail is required !");
             editTextEmail.requestFocus();
             return;
         }
 
-        if(!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+        if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
             editTextEmail.setError("Please enter a valid email !");
             editTextEmail.requestFocus();
             return;
         }
 
-        if(password.isEmpty()) {
+        if (password.isEmpty()) {
             editTextPassword.setError("Password is required !");
             editTextPassword.requestFocus();
             return;
         }
 
-        if(password.length() < 6) {
+        if (password.length() < 6) {
             editTextPassword.setError("Password length should be minimum 6 characters !");
             editTextPassword.requestFocus();
             return;
@@ -82,16 +82,16 @@ public class LoginActivity extends AppCompatActivity {
         mAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
-                if(task.isSuccessful()) {
+                if (task.isSuccessful()) {
                     finish();
                     loginProgressBar.setVisibility(View.INVISIBLE);
-                    Toast.makeText(getApplicationContext(),"Login Successfull !",Toast.LENGTH_SHORT).show();
-                    Intent homeActivityIntent = new Intent(LoginActivity.this,HomeActivity.class);
+                    Toast.makeText(getApplicationContext(), "Login Successfull !", Toast.LENGTH_SHORT).show();
+                    Intent homeActivityIntent = new Intent(LoginActivity.this, HomeActivity.class);
                     homeActivityIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                     startActivity(homeActivityIntent);
                 } else {
                     loginProgressBar.setVisibility(View.INVISIBLE);
-                    Toast.makeText(getApplicationContext(),task.getException().getMessage(),Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), task.getException().getMessage(), Toast.LENGTH_SHORT).show();
                 }
             }
         });

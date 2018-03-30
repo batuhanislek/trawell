@@ -18,8 +18,8 @@ import com.trawell.batu.trawell.R;
 public class MainActivity extends AppCompatActivity {
 
     private Button signUpWithMailButton,
-                   loginButton,
-                   skip_button;
+            loginButton,
+            skip_button;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,16 +31,16 @@ public class MainActivity extends AppCompatActivity {
         loginButton = findViewById(R.id.login_button);
         skip_button = findViewById(R.id.login_skip_button);
 
-        signUpWithMailButton.setOnClickListener(new View.OnClickListener(){
+        signUpWithMailButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
-                Intent signupActivityIntent = new Intent(view.getContext(),SignUpActivity.class);
+                Intent signupActivityIntent = new Intent(view.getContext(), SignUpActivity.class);
                 startActivity(signupActivityIntent);
             }
         });
 
-        loginButton.setOnClickListener(new View.OnClickListener(){
+        loginButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
-                Intent loginActivityIntent = new Intent(view.getContext(),LoginActivity.class);
+                Intent loginActivityIntent = new Intent(view.getContext(), LoginActivity.class);
                 startActivity(loginActivityIntent);
             }
         });
@@ -48,16 +48,16 @@ public class MainActivity extends AppCompatActivity {
         skip_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent homeActivityIntent = new Intent(MainActivity.this,HomeActivity.class);
+                Intent homeActivityIntent = new Intent(MainActivity.this, HomeActivity.class);
                 startActivity(homeActivityIntent);
             }
         });
 
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         if (user != null) {
-            Intent homeActivityIntent = new Intent(MainActivity.this,HomeActivity.class);
+            Intent homeActivityIntent = new Intent(MainActivity.this, HomeActivity.class);
             startActivity(homeActivityIntent);
-            Toast.makeText(getApplicationContext(),"Already logged in as " + user.getEmail() , Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), "Already logged in as " + user.getEmail(), Toast.LENGTH_SHORT).show();
         }
     }
 }

@@ -13,7 +13,7 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
-import com.google.android.gms.internal.kx;
+
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.FirebaseApp;
@@ -35,8 +35,8 @@ import java.util.List;
 public class SignUpActivity extends AppCompatActivity {
 
     private EditText editTextUsername,
-                     editTextEmail,
-                     editTextPassword;
+            editTextEmail,
+            editTextPassword;
 
     public ProgressBar progressBar;
     public Button signup_button;
@@ -73,27 +73,27 @@ public class SignUpActivity extends AppCompatActivity {
         final String email = editTextEmail.getText().toString().trim();
         final String password = editTextPassword.getText().toString().trim();
 
-        if(username.isEmpty()) {
+        if (username.isEmpty()) {
             editTextUsername.setError("Username is required !");
             editTextUsername.requestFocus();
             return;
         }
-        if(email.isEmpty()) {
+        if (email.isEmpty()) {
             editTextEmail.setError("E-mail is required !");
             editTextEmail.requestFocus();
             return;
         }
-        if(!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+        if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
             editTextEmail.setError("Please enter a valid email !");
             editTextEmail.requestFocus();
             return;
         }
-        if(password.isEmpty()) {
+        if (password.isEmpty()) {
             editTextPassword.setError("Password is required !");
             editTextPassword.requestFocus();
             return;
         }
-        if(password.length() < 6) {
+        if (password.length() < 6) {
             editTextPassword.setError("Password length should be minimum 6 characters !");
             editTextPassword.requestFocus();
             return;
@@ -104,21 +104,21 @@ public class SignUpActivity extends AppCompatActivity {
         mAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
-                if(task.isSuccessful()) {
+                if (task.isSuccessful()) {
                     FirebaseUser user = mAuth.getCurrentUser();
                     String uid = user.getUid();
                     userRef.child(uid).setValue(new User(username, email));
                     progressBar.setVisibility(View.INVISIBLE);
                     FirebaseAuth.getInstance().signOut();
-                    Toast.makeText(getApplicationContext(),"User registered Successfully !", Toast.LENGTH_SHORT).show();
-                    Intent loginActivityIntent = new Intent(getApplicationContext(),LoginActivity.class);
+                    Toast.makeText(getApplicationContext(), "User registered Successfully !", Toast.LENGTH_SHORT).show();
+                    Intent loginActivityIntent = new Intent(getApplicationContext(), LoginActivity.class);
                     startActivity(loginActivityIntent);
                 } else {
                     progressBar.setVisibility(View.INVISIBLE);
-                    if(task.getException() instanceof FirebaseAuthUserCollisionException) {
-                        Toast.makeText(getApplicationContext(),"This email is already registered !", Toast.LENGTH_SHORT).show();
+                    if (task.getException() instanceof FirebaseAuthUserCollisionException) {
+                        Toast.makeText(getApplicationContext(), "This email is already registered !", Toast.LENGTH_SHORT).show();
                     } else {
-                        Toast.makeText(getApplicationContext(),task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(), task.getException().getMessage(), Toast.LENGTH_SHORT).show();
                     }
                 }
             }

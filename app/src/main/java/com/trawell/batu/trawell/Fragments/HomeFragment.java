@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.RelativeLayout;
 
+
 import com.trawell.batu.trawell.Activity.NewTrip;
 import com.trawell.batu.trawell.R;
 
@@ -35,7 +36,7 @@ public class HomeFragment extends Fragment {
         addTripButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent newTripActivityIntent = new Intent(view.getContext(),NewTrip.class);
+                Intent newTripActivityIntent = new Intent(view.getContext(), NewTrip.class);
                 startActivity(newTripActivityIntent);
             }
         });
