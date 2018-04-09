@@ -83,11 +83,10 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if (task.isSuccessful()) {
-                    finish();
                     loginProgressBar.setVisibility(View.INVISIBLE);
                     Toast.makeText(getApplicationContext(), "Login Successfull !", Toast.LENGTH_SHORT).show();
                     Intent homeActivityIntent = new Intent(LoginActivity.this, HomeActivity.class);
-                    homeActivityIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                    finish();
                     startActivity(homeActivityIntent);
                 } else {
                     loginProgressBar.setVisibility(View.INVISIBLE);
