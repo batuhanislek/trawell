@@ -26,7 +26,7 @@
                     android:id="@+id/new_trip_button"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:tint="@android:color/black"
+                    android:tint="@android:color/holo_blue_light"
                     android:layout_centerVertical="true"
                     android:background="@android:color/transparent"
                     app:srcCompat="@drawable/add_30dp"/>
@@ -44,12 +44,11 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
-                    android:tint="@android:color/black"
+                    android:tint="@android:color/holo_blue_light"
                     android:layout_centerVertical="true"
                     android:paddingRight="10dp"
                     android:background="@android:color/transparent"
                     app:srcCompat="@drawable/notification_30dp"/>
-
             </RelativeLayout>
         </android.support.v7.widget.Toolbar>
 
@@ -61,13 +60,34 @@
             android:layout_height="1dp"
             android:background="#A4A4A4" />
 
-        <TextView
+        <android.support.v4.widget.SwipeRefreshLayout
+            android:id="@+id/swipeRefreshLayout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_below="@+id/bar_line"
-            android:gravity="center"
-            android:text="Home Fragment" />
+            android:padding="5dp"
+            android:layout_below="@id/bar_line">
+
+            <android.support.v4.widget.NestedScrollView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                >
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <android.support.v7.widget.RecyclerView
+                        android:id="@+id/home_recycler_view"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+                    </android.support.v7.widget.RecyclerView>
+                </RelativeLayout>
+            </android.support.v4.widget.NestedScrollView>
+
+
+
+        </android.support.v4.widget.SwipeRefreshLayout>
+
 
     </RelativeLayout>
-
 </FrameLayout>

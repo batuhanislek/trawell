@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="320dp"
+    android:layout_marginBottom="10dp"
+    app:cardCornerRadius="5dp"
+    android:elevation="3dp"
+    android:background="@color/cardview_light_background">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            android:alpha="0.8"
+            android:scaleType="centerCrop"
+            android:background="@color/colorPrimary"
+             />
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/avatar_image"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_alignParentTop="true"
+            android:layout_marginStart="13dp"
+            android:layout_marginLeft="13dp"
+            android:layout_marginTop="98dp"
+            app:civ_border_width="0.1dp"
+            app:civ_border_color="#ffff"
+            android:src="@drawable/img"  />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:textColor="@android:color/white"
+            android:layout_margin="5dp"
+            android:padding="3dp"
+            android:background="@drawable/rounded_corner"
+            android:textStyle="bold"
+            android:text="LIVE"/>
+
+        <TextView
+            android:id="@+id/username_textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/avatar_image"
+            android:textColor="@android:color/white"
+            android:layout_marginTop="115dp"
+            android:layout_marginLeft="8dp"
+            android:textStyle="bold"
+            android:typeface="normal"
+            android:textSize="15sp"
+            />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="12dp"
+            android:layout_below="@id/avatar_image"
+            android:padding="6dp">
+
+            <RelativeLayout
+                android:id="@+id/text_layout"
+                android:layout_width="match_parent"
+                android:layout_height="130dp"
+                android:padding="10dp">
+
+                <TextView
+                    android:id="@+id/headline1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Route :"
+                    android:textColor="@android:color/black"
+                    android:typeface="normal"
+                    android:textStyle="bold"
+                    app:fontFamily="@font/roboto_medium" />
+
+                <TextView
+                    android:id="@+id/route"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toRightOf="@id/headline1"
+                    android:layout_marginLeft="10dp"
+                    android:textColor="@android:color/black"
+                    />
+
+                <TextView
+                    android:id="@+id/headline2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/headline1"
+                    android:layout_marginTop="8dp"
+                    android:textColor="@android:color/black"
+                    android:typeface="normal"
+                    android:textStyle="bold"
+                    app:fontFamily="@font/roboto_medium"
+                    android:text="Time Spent :"/>
+
+                <TextView
+                    android:id="@+id/time_spent"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toRightOf="@id/headline2"
+                    android:layout_marginTop="8dp"
+                    android:textColor="@android:color/black"
+                    android:layout_marginLeft="10dp"
+                    android:layout_below="@id/route" />
+
+                <TextView
+                    android:id="@+id/headline3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/headline2"
+                    android:layout_marginTop="8dp"
+                    android:textStyle="bold"
+                    android:textColor="@android:color/black"
+                    app:fontFamily="@font/roboto_medium"
+                    android:text="Last Seen :"/>
+
+                <TextView
+                    android:id="@+id/last_seen"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toRightOf="@id/headline3"
+                    android:layout_marginTop="8dp"
+                    android:textColor="@android:color/black"
+                    android:layout_marginLeft="10dp"
+                    android:layout_below="@id/time_spent"
+                    android:text="Berlin, Germany"/>
+
+                <TextView
+                    android:id="@+id/headline4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/headline3"
+                    android:layout_marginTop="8dp"
+                    android:textStyle="bold"
+                    android:textColor="@android:color/black"
+                    app:fontFamily="@font/roboto_medium"
+                    android:text="Last Update :"/>
+
+                <TextView
+                    android:id="@+id/last_update"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toRightOf="@id/headline3"
+                    android:layout_marginTop="8dp"
+                    android:textColor="@android:color/black"
+                    android:layout_marginLeft="20dp"
+                    android:layout_below="@id/last_seen"
+                    android:text="5 minutes ago"/>
+
+            </RelativeLayout>
+
+            <LinearLayout
+                android:id="@+id/buttons_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_below="@id/text_layout"
+                android:layout_alignParentBottom="true">
+
+                <ImageButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:srcCompat="@drawable/like_24dp"
+                    android:layout_marginLeft="5dp"
+                    android:scaleX="1.2"
+                    android:scaleY="1.2"
+                    android:background="@android:color/transparent"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:text="10 likes"/>
+
+                <ImageButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="15dp"
+                    android:scaleX="1.1"
+                    android:scaleY="1.1"
+                    app:srcCompat="@drawable/comment_24dp"
+                    android:background="@android:color/transparent"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:text="5 Comments"/>
+
+                <ImageButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="100dp"
+                    app:srcCompat="@drawable/bookmark_24dp"
+                    android:scaleX="1.2"
+                    android:scaleY="1.2"
+                    android:background="@android:color/transparent"/>
+
+            </LinearLayout>
+
+        </RelativeLayout>
+
+
+
+    </RelativeLayout>
+
+</android.support.v7.widget.CardView>

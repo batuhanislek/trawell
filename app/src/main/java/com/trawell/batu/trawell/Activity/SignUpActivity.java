@@ -30,6 +30,7 @@ import com.trawell.batu.trawell.R;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.List;
 
 public class SignUpActivity extends AppCompatActivity {
@@ -105,9 +106,10 @@ public class SignUpActivity extends AppCompatActivity {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if (task.isSuccessful()) {
+                    ArrayList<String> tripsList = new ArrayList<String>();
                     FirebaseUser user = mAuth.getCurrentUser();
                     String uid = user.getUid();
-                    userRef.child(uid).setValue(new User(username, email));
+                    userRef.child(uid).setValue(new User(username, email, tripsList));
                     progressBar.setVisibility(View.INVISIBLE);
                     FirebaseAuth.getInstance().signOut();
                     Toast.makeText(getApplicationContext(), "User registered Successfully !", Toast.LENGTH_SHORT).show();

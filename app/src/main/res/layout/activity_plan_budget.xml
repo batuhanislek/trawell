@@ -1,0 +1,136 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:focusable="true"
+    android:padding="8dp"
+    tools:context="com.trawell.batu.trawell.Activity.NewTrip">
+
+    <ImageButton
+        android:id="@+id/back_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingTop="3dp"
+        android:background="@color/transparent"
+        app:srcCompat="@drawable/arrow_back_24dp"/>
+
+    <TextView
+        android:id="@+id/budget_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:textColor="@android:color/black"
+        android:layout_toRightOf="@id/back_button"
+        android:layout_marginLeft="20dp"
+        android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+        android:text="@string/budget_plan"/>
+
+
+    <View
+        android:id="@+id/new_trip_line"
+        android:layout_width="wrap_content"
+        android:layout_below="@id/budget_title"
+        android:layout_height="1dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="20dp"
+        android:background="#A4A4A4" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/new_trip_line">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/trip_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:text="Trip Name"/>
+
+            <TextView
+                android:id="@+id/total_budget_TextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/trip_name"
+                android:layout_marginTop="20dp"
+                android:text="Total Budget "/>
+
+            <EditText
+                android:id="@+id/total_budget_editText"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/trip_name"
+                android:inputType="number|numberDecimal"
+                android:clickable="false"
+                android:focusable="false"
+                android:layout_marginLeft="30dp"
+                android:layout_toRightOf="@id/total_budget_TextView"
+                />
+
+            <TextView
+                android:id="@+id/total_days_textView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/total_budget_editText"
+                android:text="Total Days"/>
+
+            <TextView
+                android:id="@+id/total_days"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="50dp"
+                android:layout_below="@id/total_budget_editText"
+                android:layout_toRightOf="@+id/total_days_textView"
+                android:text="0"/>
+
+            <TextView
+                android:id="@+id/budget_per_day_textView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:layout_below="@id/total_days_textView"
+                android:text="Budget per day"/>
+
+            <TextView
+                android:id="@+id/budget_per_day_editText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="50dp"
+                android:layout_marginTop="5dp"
+                android:layout_below="@id/total_days"
+                android:layout_toRightOf="@+id/total_days_textView"
+                android:text="0" />
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/budget_recyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="20dp"
+                android:layout_below="@id/budget_per_day_textView">
+            </android.support.v7.widget.RecyclerView>
+
+            <Button
+                android:id="@+id/save_button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/budget_recyclerView"
+                android:background="@color/successGreen"
+                android:textColor="@android:color/white"
+                android:text="SAVE"
+                android:layout_marginTop="20dp" />
+
+
+        </RelativeLayout>
+    </ScrollView>
+
+
+
+
+
+</RelativeLayout>

@@ -57,7 +57,6 @@ public class MainActivity extends AppCompatActivity {
         if (user != null) {
             Intent homeActivityIntent = new Intent(MainActivity.this, HomeActivity.class);
             startActivity(homeActivityIntent);
-            Toast.makeText(getApplicationContext(), "Already logged in as " + user.getEmail(), Toast.LENGTH_SHORT).show();
         }
     }
 }

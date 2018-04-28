@@ -12,6 +12,9 @@
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyD-5mPmIPWyCsMbKzTBDUH5g30GwIZr3Tw" />
+        <meta-data
+            android:name="preloaded_fonts"
+            android:resource="@array/preloaded_fonts" />
 
         <activity android:name=".Activity.MainActivity">
             <intent-filter>
@@ -26,8 +29,10 @@
         <activity android:name=".Activity.NewTrip" />
         <activity
             android:name=".Activity.SearchDestination"
-            android:theme="@style/Theme.Transparent"></activity>
-        <activity android:name=".Activity.ShowOnMap"></activity>
+            android:theme="@style/Theme.Transparent" />
+        <activity android:name=".Activity.ShowOnMap" />
+        <activity android:name=".Activity.PlanBudget" />
+        <activity android:name=".TravelActivity"></activity>
     </application>
 
 </manifest>

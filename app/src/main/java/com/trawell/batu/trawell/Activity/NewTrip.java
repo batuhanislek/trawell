@@ -12,8 +12,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
+import android.view.animation.CycleInterpolator;
+import android.view.animation.TranslateAnimation;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
@@ -56,7 +60,7 @@ public class NewTrip extends AppCompatActivity {
     private FirebaseAuth mAuth;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_trip);
 
@@ -64,7 +68,7 @@ public class NewTrip extends AppCompatActivity {
         searchDestination_EditText  =    findViewById(R.id.search_editText);
         recyclerView                =    findViewById(R.id.recycler_view);
         saveTripButton              =    findViewById(R.id.save_button);
-        addDestinationButton        =    findViewById(R.id.add_button);
+        //addDestinationButton        =    findViewById(R.id.add_button);
         showMapButton               =    findViewById(R.id.show_map_button);
         tripName_EditText           =    findViewById(R.id.trip_name_edit);
 
@@ -77,7 +81,6 @@ public class NewTrip extends AppCompatActivity {
         recyclerView.setNestedScrollingEnabled(false);
 
         getIncomingIntent();
-
 
         mAuth = FirebaseAuth.getInstance();
         tripRef = FirebaseDatabase.getInstance().getReference("Trips");
@@ -96,7 +99,7 @@ public class NewTrip extends AppCompatActivity {
                 alertDialogCreator();
             }
         });
-
+        /*
         addDestinationButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -104,17 +107,37 @@ public class NewTrip extends AppCompatActivity {
                 startActivity(searchIntent);
             }
         });
+        */
 
         saveTripButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String userId = mAuth.getCurrentUser().getUid();
-                tripName = tripName_EditText.getText().toString();
-                tripRef.child(userId).child(tripName).setValue(destList);
-                Intent currentTravelIntent = new Intent(NewTrip.this, HomeActivity.class);
-                startActivity(currentTravelIntent);
-                deleteSharedPref();
-                Toast.makeText(getApplicationContext(), "Trip Saved", Toast.LENGTH_SHORT).show();
+
+                if(tripName_EditText.getText().toString().trim().length() > 0) {
+                    saveData();
+                    Intent planBudgetIntent = new Intent(NewTrip.this, PlanBudget.class);
+                    startActivity(planBudgetIntent);
+
+                } else {
+                    tripName_EditText.startAnimation(shakeError());
+                }
+            }
+        });
+
+        tripName_EditText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {}
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                tripName = s.toString();
+                SharedPreferences sharedPreferences = getSharedPreferences("sharedPref", MODE_PRIVATE);
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                editor.putString("trip name", tripName);
+                editor.apply();
             }
         });
     }
@@ -134,14 +157,10 @@ public class NewTrip extends AppCompatActivity {
         Gson gson = new Gson();
         String json = gson.toJson(destList);
         editor.putString("destination list", json);
-        tripName = tripName_EditText.getText().toString();
-        editor.putString("trip name", tripName);
         editor.apply();
-        Log.i("size1", " "+ destList);
     }
 
     private void loadData() {
-        Log.i("size2", " "+ destList);
         SharedPreferences sharedPreferences = getSharedPreferences("sharedPref", MODE_PRIVATE);
         Gson gson = new Gson();
         String json = sharedPreferences.getString("destination list",null);
@@ -151,9 +170,7 @@ public class NewTrip extends AppCompatActivity {
         destList = gson.fromJson(json, type);
         if(destList == null) {
             destList = new ArrayList<>();
-            Log.i("size4", " "+ destList);
         }
-        Log.i("size3", " "+ destList);
     }
 
     @Override
@@ -181,6 +198,7 @@ public class NewTrip extends AppCompatActivity {
                         deleteSharedPref();
                         Intent currentTravelIntent = new Intent(NewTrip.this, HomeActivity.class);
                         startActivity(currentTravelIntent);
+                        overridePendingTransition(R.anim.slide_in_down, R.anim.slide_out_down);
                     }
                 })
                 .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
@@ -191,6 +209,13 @@ public class NewTrip extends AppCompatActivity {
                 .setIcon(android.R.drawable.ic_menu_save)
                 .setCancelable(false)
                 .show();
+    }
+
+    public TranslateAnimation shakeError() {
+        TranslateAnimation shake = new TranslateAnimation(0, 10, 0, 0);
+        shake.setDuration(400);
+        shake.setInterpolator(new CycleInterpolator(8));
+        return shake;
     }
 
 

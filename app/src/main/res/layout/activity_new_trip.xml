@@ -5,7 +5,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:focusable="true"
-    android:focusableInTouchMode="true"
     android:padding="8dp"
     tools:context="com.trawell.batu.trawell.Activity.NewTrip">
 
@@ -44,7 +43,9 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:focusable="true"
+            android:focusableInTouchMode="true">
 
             <TextView
                 android:id="@+id/trip_name"
@@ -78,65 +79,63 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_below="@+id/search_title"
-                android:paddingTop="20dp"
+                android:paddingTop="15dp"
                 android:focusableInTouchMode="false"
                 android:editable="false"
                 android:hint="Where do you go next ?"/>
 
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/recycler_view"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginTop="10dp"
-                android:layout_below="@id/search_editText">
-            </android.support.v7.widget.RecyclerView>
-
-            <Button
-                android:id="@+id/add_button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:background="@android:color/transparent"
-                android:layout_below="@id/recycler_view"
-                android:textAllCaps="false"
-                android:visibility="invisible"
-                android:text="+ Add destination"/>
 
 
-            <LinearLayout
-                android:id="@+id/buttons"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:gravity="bottom"
-                android:layout_below="@+id/add_button"
-                >
-
-                <Button
-                    android:id="@+id/save_button"
-                    android:layout_width="0dp"
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/recycler_view"
+                    android:layout_width="match_parent"
+                    android:layout_below="@id/search_editText"
                     android:layout_height="match_parent"
-                    android:layout_weight="3"
-                    android:background="@color/successGreen"
-                    android:textColor="@android:color/white"
-                    android:layout_marginRight="5dp"
-                    android:textAllCaps="false"
-                    android:text="Save"/>
+                    android:clipToPadding="false"
+                    android:layout_marginTop="10dp">
+                </android.support.v7.widget.RecyclerView>
 
-                <Button
-                    android:id="@+id/show_map_button"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="2"
-                    android:layout_marginLeft="5dp"
-                    android:background="@android:color/holo_blue_bright"
-                    android:layout_toRightOf="@+id/save"
-                    android:textColor="@android:color/white"
-                    android:paddingRight="7dp"
-                    android:textAllCaps="false"
-                    android:drawableRight="@drawable/map_24dp"
-                    android:text="Show on Map"/>
-            </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/buttons"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/recycler_view"
+                    android:layout_marginBottom="100dp"
+                    android:layout_alignParentBottom="true"
+                    >
+
+                    <Button
+                        android:id="@+id/save_button"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@color/successGreen"
+                        android:textColor="@android:color/white"
+                        android:layout_marginRight="5dp"
+                        android:textAllCaps="false"
+                        android:text="Plan Budget &amp; Expenses "
+                        />
+
+                    <Button
+                        android:id="@+id/show_map_button"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="2"
+                        android:layout_marginLeft="5dp"
+                        android:background="@android:color/holo_blue_bright"
+                        android:layout_toRightOf="@+id/save"
+                        android:textColor="@android:color/white"
+                        android:paddingRight="7dp"
+                        android:textAllCaps="false"
+                        android:drawableRight="@drawable/map_24dp"
+                        android:text="Show on Map"
+                        />
+                </LinearLayout>
+
+
+
+
+
         </RelativeLayout>
     </android.support.v4.widget.NestedScrollView>
 </RelativeLayout>
