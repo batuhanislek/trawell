@@ -29,7 +29,7 @@ public class ProfileFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_profile, container, false);
-        signOutButton = view.findViewById(R.id.signout_button);
+        signOutButton = view.findViewById(R.id.signout_profile_button);
 
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         if (user == null) {

@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.trawell.batu.trawell">
 
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -25,14 +27,17 @@
         </activity>
         <activity android:name=".Activity.SignUpActivity" />
         <activity android:name=".Activity.LoginActivity" />
-        <activity android:name=".Activity.HomeActivity" />
+        <activity
+            android:name=".Activity.HomeActivity"
+            android:windowSoftInputMode="stateAlwaysHidden|adjustPan|adjustResize" />
         <activity android:name=".Activity.NewTrip" />
         <activity
             android:name=".Activity.SearchDestination"
             android:theme="@style/Theme.Transparent" />
         <activity android:name=".Activity.ShowOnMap" />
         <activity android:name=".Activity.PlanBudget" />
-        <activity android:name=".TravelActivity"></activity>
+        <activity android:name=".Activity.TravelActivity" />
+        <activity android:name=".Activity.SelectionActivity"></activity>
     </application>
 
 </manifest>

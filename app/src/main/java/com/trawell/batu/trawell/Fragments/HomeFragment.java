@@ -56,6 +56,7 @@ public class HomeFragment extends Fragment {
     private ArrayList<Trip> tripList;
     private SwipeRefreshLayout mSwipeRefreshLayout;
     private Query lastQuery;
+    private String tripId;
 
     public HomeFragment() {
         // Required empty public constructor
@@ -96,12 +97,15 @@ public class HomeFragment extends Fragment {
         lastQuery = tripsRef.orderByKey();
 
 
+
         lastQuery.addChildEventListener(new ChildEventListener() {
 
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                 Trip trip = new Trip();
                 String ownerId = ((String) dataSnapshot.child("ownerId").getValue());
+                String tripId = ((String) dataSnapshot.child("tripId").getValue());
+                String tripName = ((String) dataSnapshot.child("tripName").getValue());
 
                 for (DataSnapshot childSnapshot: dataSnapshot.child("destinations").getChildren()) {
                     childSnapshot.getValue(Destination.class);
@@ -110,6 +114,8 @@ public class HomeFragment extends Fragment {
                 }
 
                 trip.setOwnerId(ownerId);
+                trip.setTripId(tripId);
+                trip.setTripName(tripName);
                 tripList.add(trip);
                 recyclerView.setAdapter(tripAdapter);
                 tripAdapter.notifyDataSetChanged();

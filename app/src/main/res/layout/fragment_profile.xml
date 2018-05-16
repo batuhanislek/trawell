@@ -1,29 +1,89 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context="com.trawell.batu.trawell.Fragments.ProfileFragment">
 
     <!-- TODO: Update blank fragment layout -->
 
+    <RelativeLayout
+        android:id="@+id/profile_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <!--
+        <ImageButton
+            android:id="@+id/action_close_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            app:srcCompat="@drawable/close_24dp"
+            android:background="@android:color/transparent"/>
+            -->
+
+        <Button
+            android:id="@+id/signout_profile_button"
+            android:layout_alignParentRight="true"
+            android:layout_width="70dp"
+            android:layout_height="30dp"
+            android:layout_margin="10dp"
+            android:textAllCaps="false"
+            android:textColor="@android:color/white"
+            android:background="@android:color/holo_red_light"
+            android:text="Sign Out" />
+
+        <View
+            android:id="@+id/profile_line"
+            android:layout_width="wrap_content"
+            android:layout_below="@id/signout_profile_button"
+            android:layout_height="1dp"
+            android:background="#A4A4A4" />
+    </RelativeLayout>
 
 
 
-    <Button
-        android:id="@+id/signout_button"
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/profile_image"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_below="@id/profile_layout"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:src="@drawable/img"/>
+
+
+    <LinearLayout
+        android:id="@+id/follow_layout"
+        android:layout_below="@id/profile_image"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="10dp"
-        android:textAllCaps="false"
-        android:textColor="@android:color/white"
-        android:background="@android:color/holo_red_light"
-        android:text="Sign Out"
-        android:layout_gravity="right"
-        />
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="center"
-        android:text="Profile Fragment" />
+        android:layout_marginTop="20dp"
+        android:layout_centerHorizontal="true"
+        android:orientation="horizontal">
 
-</FrameLayout>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="100 Followers"
+            android:layout_marginRight="50dp"
+            android:textColor="@android:color/black"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="105 Following"
+            android:textColor="@android:color/black"/>
+    </LinearLayout>
+
+
+
+
+
+
+
+
+
+
+
+
+</RelativeLayout>

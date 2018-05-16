@@ -107,6 +107,8 @@ public class PlanBudget extends AppCompatActivity implements SharedPreferences.O
                 tripRef.child(dataID).child("destinations").setValue(destList);
 
                 tripRef.child(dataID).child("ownerId").setValue(mAuth.getCurrentUser().getUid());
+                tripRef.child(dataID).child("tripName").setValue(tripName);
+                tripRef.child(dataID).child("tripId").setValue(dataID);
                 userRef.child(userId).child("tripIdList").child(dataID).setValue(true);
 
                 Intent planBudgetIntent = new Intent(PlanBudget.this, HomeActivity.class);

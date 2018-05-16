@@ -26,5 +26,8 @@ public class CurrentFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_current, container, false);
         actionBar = view.findViewById(R.id.toolbar_layout);
         return view;
+
+
+
     }
 }

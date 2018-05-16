@@ -8,12 +8,22 @@ import java.util.ArrayList;
  */
 public class Trip {
     private String ownerId;
+    private String tripId;
     private String tripName;
     private int listSize;
     private String timestamp;
     private ArrayList<Destination> destinationArrayList = new ArrayList<Destination>();
 
     public Trip() {}
+
+
+    public String getTripId() {
+        return tripId;
+    }
+
+    public void setTripId(String tripId) {
+        this.tripId = tripId;
+    }
 
     public int getListSize() {
         return destinationArrayList.size();

@@ -2,12 +2,13 @@ package com.trawell.batu.trawell.Adapters;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.google.firebase.database.DataSnapshot;
@@ -18,9 +19,10 @@ import com.google.firebase.database.ValueEventListener;
 import com.trawell.batu.trawell.Model.Trip;
 import com.trawell.batu.trawell.TaskManager.DateCalculation;
 import com.trawell.batu.trawell.R;
-import com.trawell.batu.trawell.TravelActivity;
+import com.trawell.batu.trawell.Activity.TravelActivity;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 /**
  * Created by Batuhan Islek on 22.04.2018.
@@ -32,6 +34,7 @@ public class TripAdapter extends RecyclerView.Adapter<TripAdapter.ViewHolder> {
     private DatabaseReference userRef;
     private DatabaseReference tripRef;
     private  int counter=0;
+    private String username, ownerId;
 
     public TripAdapter(Context context, ArrayList<Trip> list) {
         mContext = context;
@@ -57,12 +60,14 @@ public class TripAdapter extends RecyclerView.Adapter<TripAdapter.ViewHolder> {
     public void onBindViewHolder(@NonNull TripAdapter.ViewHolder holder, final int position) {
 
         final Trip destItem = getItem(position);
-        String username;
 
         final TextView usernameTextView = holder.usernameTextView;
         final TextView routeTextView = holder.routeTextView;
-        final String ownerId = destItem.getOwnerId();
+        ownerId = destItem.getOwnerId();
         final TextView timeSpentTextView = holder.timeSpentTextView;
+        final ImageView travelCardImage = holder.travelCardImage;
+
+        backgroundColorPicker(travelCardImage);
 
 
         DatabaseReference ownerRef = userRef.child(ownerId);
@@ -71,7 +76,8 @@ public class TripAdapter extends RecyclerView.Adapter<TripAdapter.ViewHolder> {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 if(dataSnapshot.exists()) {
-                    usernameTextView.setText(String.valueOf(dataSnapshot.child("username").getValue()));
+                    username = String.valueOf(dataSnapshot.child("username").getValue());
+                    usernameTextView.setText(username);
                 }
             }
             @Override
@@ -113,12 +119,12 @@ public class TripAdapter extends RecyclerView.Adapter<TripAdapter.ViewHolder> {
     }
 
 
-
     class ViewHolder extends RecyclerView.ViewHolder {
 
         TextView usernameTextView;
         TextView routeTextView;
         TextView timeSpentTextView;
+        ImageView travelCardImage;
 
         public ViewHolder(final View itemView) {
             super(itemView);
@@ -126,11 +132,15 @@ public class TripAdapter extends RecyclerView.Adapter<TripAdapter.ViewHolder> {
             usernameTextView = itemView.findViewById(R.id.username_textView);
             routeTextView = itemView.findViewById(R.id.route);
             timeSpentTextView = itemView.findViewById(R.id.time_spent);
+            travelCardImage = itemView.findViewById(R.id.travelcard_image);
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     Intent travelIntent = new Intent(v.getContext(), TravelActivity.class);
+                    Trip t = getItem(getAdapterPosition());
+                    travelIntent.putExtra("tripId", t.getTripId());
+                    travelIntent.putExtra("ownerId", t.getOwnerId());
                     itemView.getContext().startActivity(travelIntent);
                 }
             });
@@ -139,6 +149,17 @@ public class TripAdapter extends RecyclerView.Adapter<TripAdapter.ViewHolder> {
         }
     }
 
+
+    public void backgroundColorPicker(ImageView iv) {
+
+        String[] colorArray = {"#BBDEFB","#90CAF9","#42A5F5","#1565C0","#82B1FF","#03A9F4",
+                "#039BE5","#00BCD4","#26C6DA","#00838F","#00B8D4","#009688","#26A69A","#00796B",
+                "#004D40","#66BB6A","#388E3C","#8BC34A"};
+
+        Random color = new Random();
+        int n = color.nextInt(18);
+        iv.setBackgroundColor(Color.parseColor(colorArray[n]));
+    }
 
 
 

@@ -1,6 +1,7 @@
 package com.trawell.batu.trawell.Activity;
 
 
+import android.content.Intent;
 import android.support.v4.app.FragmentTransaction;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
@@ -34,6 +35,7 @@ public class HomeActivity extends AppCompatActivity {
                     HomeFragment fragmentHome = new HomeFragment();
                     FragmentTransaction fragmentTransactionHome = getSupportFragmentManager().beginTransaction();
                     fragmentTransactionHome.replace(R.id.frame_layout, fragmentHome, "HomeFragment");
+
                     fragmentTransactionHome.commit();
                     return true;
                 case R.id.nav_discover:
@@ -78,5 +80,10 @@ public class HomeActivity extends AppCompatActivity {
         fragmentTransactionHome.replace(R.id.frame_layout, fragmentHome, "HomeFragment");
         fragmentTransactionHome.commit();
 
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data){
+        super.onActivityResult(requestCode,resultCode,data);
     }
 }
