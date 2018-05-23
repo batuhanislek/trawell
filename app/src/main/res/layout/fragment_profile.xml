@@ -43,14 +43,6 @@
         android:layout_marginTop="20dp"
         android:src="@drawable/img"/>
 
-    <ImageButton
-        android:layout_width="10dp"
-        android:layout_height="9dp"
-        android:layout_alignParentLeft="true"
-        android:layout_below="@+id/profile_image"
-        android:layout_marginLeft="100dp"
-        app:srcCompat="@drawable/add_30dp" />
-
     <TextView
         android:id="@+id/profile_username"
         android:layout_width="wrap_content"

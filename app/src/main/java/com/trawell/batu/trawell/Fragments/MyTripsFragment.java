@@ -47,7 +47,6 @@ public class MyTripsFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_my_trips, container, false);
 
         tripList = new ArrayList<Trip>();
@@ -61,20 +60,8 @@ public class MyTripsFragment extends Fragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setNestedScrollingEnabled(false);
+        tripAdapter = new TripAdapter(getContext(), tripList);
         getUserId();
-        tripAdapter = new TripAdapter(getContext(),tripList);
-
-
-
-
-
-
-
-
-
-
-
-
 
         return view;
     }
@@ -90,32 +77,31 @@ public class MyTripsFragment extends Fragment {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for (DataSnapshot childSnapshot: dataSnapshot.getChildren()) {
-
-                    Log.i("snapshot", childSnapshot.getKey().toString());
+                    //Log.i("snapshot", childSnapshot.getKey().toString());
                     tripIdList.add(childSnapshot.getKey().toString());
                 }
                 getMyTripsContent();
             }
-
             @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
+            public void onCancelled(DatabaseError databaseError) { }
         });
     }
 
     public void getMyTripsContent() {
-        for(int i=0; i < tripIdList.size(); i++) {
+
+        for(int i = 0; i < tripIdList.size(); i++) {
             String tripId = tripIdList.get(i);
-            tripsRef.child(tripId).addChildEventListener(new ChildEventListener() {
+            Log.i("selectedTripID",tripId);
+            tripsRef.child(tripId).addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
-                public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    Log.i("data", dataSnapshot.toString());
                     Trip trip = new Trip();
                     String ownerId = ((String) dataSnapshot.child("ownerId").getValue());
                     String tripId = ((String) dataSnapshot.child("tripId").getValue());
                     String tripName = ((String) dataSnapshot.child("tripName").getValue());
 
-                    for (DataSnapshot childSnapshot: dataSnapshot.child("destinations").getChildren()) {
+                    for (DataSnapshot childSnapshot : dataSnapshot.child("destinations").getChildren()) {
                         childSnapshot.getValue(Destination.class);
                         trip.addDestination(childSnapshot.getValue(Destination.class));
                     }
@@ -123,23 +109,9 @@ public class MyTripsFragment extends Fragment {
                     trip.setTripId(tripId);
                     trip.setTripName(tripName);
                     tripList.add(trip);
+                    Log.i("triplist", tripList.toString());
                     recyclerView.setAdapter(tripAdapter);
                     tripAdapter.notifyDataSetChanged();
-
-                }
-
-                @Override
-                public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-
-                }
-
-                @Override
-                public void onChildRemoved(DataSnapshot dataSnapshot) {
-
-                }
-
-                @Override
-                public void onChildMoved(DataSnapshot dataSnapshot, String s) {
 
                 }
 
@@ -150,9 +122,8 @@ public class MyTripsFragment extends Fragment {
             });
 
 
+
         }
-
-
 
     }
 }

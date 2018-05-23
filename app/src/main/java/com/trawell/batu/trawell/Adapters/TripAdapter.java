@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -64,12 +65,14 @@ public class TripAdapter extends RecyclerView.Adapter<TripAdapter.ViewHolder> {
 
         final TextView usernameTextView = holder.usernameTextView;
         final TextView routeTextView = holder.routeTextView;
-        ownerId = destItem.getOwnerId();
+
         final TextView timeSpentTextView = holder.timeSpentTextView;
         final ImageView travelCardImage = holder.travelCardImage;
 
-        backgroundColorPicker(travelCardImage);
+        ownerId = destItem.getOwnerId();
+        //Log.i("ownerId",ownerId);
 
+        backgroundColorPicker(travelCardImage);
 
         DatabaseReference ownerRef = userRef.child(ownerId);
 
