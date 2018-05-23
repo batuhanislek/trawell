@@ -1,5 +1,7 @@
 package com.trawell.batu.trawell.Fragments;
 
+import android.graphics.Color;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
@@ -51,6 +53,9 @@ public class CurrentFragment extends Fragment {
     Button showExpensesButton;
     Spinner spinner;
     RelativeLayout contentLayout;
+    String tripId;
+    String selectedTrip;
+    double foodBevExp=0, transportExp=0, accomExp=0, eventExp=0, entertExp=0;
 
     public CurrentFragment() {
         // Required empty public constructor
@@ -71,16 +76,13 @@ public class CurrentFragment extends Fragment {
         mAuth = FirebaseAuth.getInstance();
         String currentUserId = mAuth.getCurrentUser().getUid();
         userTripIdListRef = FirebaseDatabase.getInstance().getReference("Users").child(currentUserId).child("tripIdList");
-
+        expenseArrayList = new ArrayList<>();
 
         tripsRef = FirebaseDatabase.getInstance().getReference("Trips");
         spinner = view.findViewById(R.id.current_spinner);
         tripNames = new ArrayList<>();
         tripNames.add("Select a trip");
         loadTripIds();
-        expenseArrayList = new ArrayList<>();
-
-
 
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this.getActivity(), android.R.layout.simple_spinner_item, tripNames);
         adapter.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
@@ -88,16 +90,17 @@ public class CurrentFragment extends Fragment {
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                String selectedTrip = spinner.getSelectedItem().toString();
+                selectedTrip = spinner.getSelectedItem().toString();
 
                 if(!selectedTrip.equals("Select a trip")) {
+                    tripId = tripIdList.get(tripNames.indexOf(selectedTrip)-1);
                     showExpensesButton.setVisibility(View.VISIBLE);
                     contentLayout.setVisibility(View.VISIBLE);
-
-                    String tripId = tripIdList.get(tripNames.indexOf(selectedTrip)-1);
-                    tripExpenseListRef = FirebaseDatabase.getInstance().getReference("Trips").child(tripId).child("expenseList");
+                    Log.i("tripID",tripId);
                     loadTripExpenseBudgetData();
-                    drawPieChart();
+
+
+
 
 
                 } else {
@@ -164,38 +167,48 @@ public class CurrentFragment extends Fragment {
     }
 
     public void loadTripExpenseBudgetData() {
-        tripExpenseListRef.addListenerForSingleValueEvent(new ValueEventListener() {
+        Log.i("postID",tripId);
+        tripsRef.child(tripId).child("expenseList").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
+                expenseArrayList.clear();
                 for (DataSnapshot childSnapshot: dataSnapshot.getChildren()) {
                     expenseArrayList.add(childSnapshot.getValue(Expense.class));
                 }
+                drawPieChart(expenseArrayList);
             }
             @Override
             public void onCancelled(DatabaseError databaseError) {}
         });
 
-
     }
 
-    public void drawPieChart() {
-        float foodBevExp=0, transportExp=0, accomExp=0, eventExp=0, entertExp=0;
+    public void drawPieChart(ArrayList<Expense> list) {
+        foodBevExp=0;
+        transportExp=0;
+        accomExp=0;
+        eventExp=0;
+        entertExp=0;
         String expenseType [] = {"Food&Bev", "Transport", "Accomodation", "Event", "Entertainment"};
+
         List<PieEntry> itemList = new ArrayList<>();
 
+        for(int x =0; x < list.size(); x++) {
+            Log.i("list", list.get(x).toString());
+        }
+
         PieChart pieChart = (PieChart) view.findViewById(R.id.pie_chart);
+        pieChart.setDescription(null);
 
-        for (int i=0; i < expenseArrayList.size(); i++) {
-            String type = expenseArrayList.get(i).getType();
-            Double price = expenseArrayList.get(i).getPrice();
-
-            Log.i("type + price", type + " " + String.valueOf(price));
+        for (int i=0; i < list.size(); i++) {
+            String type = list.get(i).getType();
+            Double price = list.get(i).getPrice();
 
             switch (type){
                 case "Accomodation":
                     accomExp += price;
                     break;
-                case "Food & Beverages":
+                case "Food & Beverage":
                     foodBevExp += price;
                     break;
                 case "Transportation":
@@ -203,7 +216,6 @@ public class CurrentFragment extends Fragment {
                     break;
                 case "Event":
                     eventExp += price;
-                    itemList.add(new PieEntry(eventExp,"Event"));
                     break;
                 case "Entertainment":
                     entertExp += price;
@@ -211,28 +223,73 @@ public class CurrentFragment extends Fragment {
                 default:
                     break;
             }
-            
-            itemList.add(new PieEntry(accomExp,"Acc."));
-            itemList.add(new PieEntry(foodBevExp,"Food & Bev"));
-            itemList.add(new PieEntry(transportExp,"Transport."));
-            itemList.add(new PieEntry(entertExp, "Entert."));
         }
 
-        Log.i("itemList", itemList.toString());
+        if(accomExp != 0) {
+            itemList.add(new PieEntry(((float) accomExp),"Acc."));
+        }
+        if(transportExp != 0) {
+            itemList.add(new PieEntry(((float) transportExp),"Transport."));
+        }
+        if(foodBevExp != 0) {
+            itemList.add(new PieEntry(((float) foodBevExp),"Food & Bev"));
+        }
+        if(entertExp != 0) {
+            itemList.add(new PieEntry(((float) entertExp), "Entert."));
+        }
+        if(eventExp != 0) {
+            itemList.add(new PieEntry(((float) eventExp),"Event"));
+        }
 
-        PieDataSet dataSet = new PieDataSet(itemList,"Trip Expense");
+        PieDataSet dataSet = new PieDataSet(itemList,"");
         dataSet.setColors(ColorTemplate.COLORFUL_COLORS);
         PieData data = new PieData(dataSet);
         pieChart.setData(data);
         pieChart.invalidate();
-
-
-
+        pieChart.setEntryLabelColor(Color.BLACK);
     }
 
     public void drawLineChart() {
 
     }
+
+    private class AsyncTaskRunner extends AsyncTask<String, String, String> {
+
+        private String resp;
+        @Override
+        protected String doInBackground(String... params) {
+            //publishProgress("Sleeping..."); // Calls onProgressUpdate()
+            try {
+                while(tripId == null) {
+
+                }
+                resp = tripId;
+            } catch (Exception e) {
+                e.printStackTrace();
+                resp = e.getMessage();
+            }
+            return resp;
+        }
+
+
+        @Override
+        protected void onPostExecute(String result) {
+
+        }
+
+
+        @Override
+        protected void onPreExecute() {
+
+        }
+
+
+        @Override
+        protected void onProgressUpdate(String... text) {
+
+        }
+    }
+
 
 
 
