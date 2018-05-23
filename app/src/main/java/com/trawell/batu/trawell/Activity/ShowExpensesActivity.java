@@ -1,10 +1,12 @@
 package com.trawell.batu.trawell.Activity;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
@@ -14,6 +16,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.trawell.batu.trawell.Fragments.CurrentFragment;
 import com.trawell.batu.trawell.Model.Destination;
 import com.trawell.batu.trawell.Model.Expense;
 import com.trawell.batu.trawell.R;
@@ -27,6 +30,7 @@ public class ShowExpensesActivity extends AppCompatActivity {
     ArrayList<Expense> expenses;
     DatabaseReference tripsRef;
     LinearLayout expensesLayout;
+    ImageButton closeButton;
 
 
     @Override
@@ -34,9 +38,9 @@ public class ShowExpensesActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_show_expenses);
         expenses = new ArrayList<>();
+        closeButton = findViewById(R.id.expense_close_button);
 
         tripsRef = FirebaseDatabase.getInstance().getReference("Trips");
-
 
         scrollView = findViewById(R.id.expenses_scroll_view);
         expensesLayout = new LinearLayout(this);
@@ -46,7 +50,13 @@ public class ShowExpensesActivity extends AppCompatActivity {
         getIncomingIntent();
 
 
-
+        closeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+                onBackPressed();
+            }
+        });
 
 
 
@@ -71,10 +81,8 @@ public class ShowExpensesActivity extends AppCompatActivity {
                 //expenses.clear();
                 for (DataSnapshot childSnapshot: dataSnapshot.getChildren()) {
                     expenses.add(childSnapshot.getValue(Expense.class));
-                    //createExpenseRows(childSnapshot.getValue(Expense.class));
                 }
                 createExpenseRows();
-
             }
             @Override
             public void onCancelled(DatabaseError databaseError) {}
