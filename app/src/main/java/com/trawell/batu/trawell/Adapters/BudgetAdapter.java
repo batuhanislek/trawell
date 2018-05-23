@@ -3,6 +3,7 @@ package com.trawell.batu.trawell.Adapters;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
+import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
@@ -16,6 +17,7 @@ import android.widget.TextView;
 
 import com.google.gson.Gson;
 import com.trawell.batu.trawell.Model.Destination;
+import com.trawell.batu.trawell.Model.Expense;
 import com.trawell.batu.trawell.R;
 import com.trawell.batu.trawell.TaskManager.DateCalculation;
 //import com.trawell.batu.trawell.TaskManager.DaysBetweenDates;
@@ -23,6 +25,7 @@ import com.trawell.batu.trawell.TaskManager.DateCalculation;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -32,14 +35,21 @@ public class BudgetAdapter extends RecyclerView.Adapter<BudgetAdapter.ViewHolder
 
     private Context mContext;
     private ArrayList<Destination> mList;
+    public ArrayList<String> locationList = new ArrayList<>();
+    private ArrayList<Expense> expenseArrayList;
     private double totalBudget = 0;
     private double budget,
                    transportExpense=0,
                    accomodationExpense=0;
+    public ArrayList<EditText> editTextList = new ArrayList<EditText>();
+
+
 
     public BudgetAdapter(Context context, ArrayList<Destination> list) {
         mContext = context;
         mList = list;
+
+
     }
 
     @NonNull
@@ -48,9 +58,17 @@ public class BudgetAdapter extends RecyclerView.Adapter<BudgetAdapter.ViewHolder
 
         LayoutInflater layoutInflater = LayoutInflater.from(mContext);
         View view = layoutInflater.inflate(R.layout.budget_card, parent, false);
+
+        EditText accomEditText = view.findViewById(R.id.accomodation_editText);
+        EditText transPortEditText = view.findViewById(R.id.transportation_editText);
+        editTextList.add(accomEditText);
+        editTextList.add(transPortEditText);
+
         ViewHolder viewHolder = new ViewHolder(view);
         return viewHolder;
     }
+
+
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, final int position) {
@@ -60,24 +78,36 @@ public class BudgetAdapter extends RecyclerView.Adapter<BudgetAdapter.ViewHolder
         TextView destinationName = holder.destinationName;
         destinationName.setText(destItem.getCityName());
 
+
+
         TextView daysSpent = holder.daysSpent;
 
         long days = new DateCalculation().DaysBetweenDates(destItem.getCheckInDate(),
                                                            destItem.getCheckOutDate());
+        String location = destItem.getCityName();
+        locationList.add(location);
+
         daysSpent.setText(String.valueOf(days));
         destItem.setDaysSpent(days);
-        saveToSharedPref(mList);
+        saveDestToSharedPref(mList);
 
         TextView currentExpense = holder.currentExpense;
         EditText destinationBudget = holder.destinationBudget;
-        EditText transportExpense = holder.transportExpense_textView;
-        EditText accomodationExpense = holder.accomodationExpense_textView;
+        EditText transportExpenseView = holder.transportExpense_textView;
+        EditText accomodationExpenseView = holder.accomodationExpense_textView;
+
+
+
+
     }
+
 
     @Override
     public int getItemCount() {
-        return mList.size();
+        return  mList == null ? 0 : mList.size();
     }
+
+
 
     class ViewHolder extends RecyclerView.ViewHolder {
 
@@ -96,6 +126,11 @@ public class BudgetAdapter extends RecyclerView.Adapter<BudgetAdapter.ViewHolder
             accomodationExpense_textView = itemView.findViewById(R.id.accomodation_editText);
 
 
+            editTextList.add(transportExpense_textView);
+            editTextList.add(accomodationExpense_textView);
+
+
+
             destinationBudget.addTextChangedListener(new TextWatcher() {
                 @Override
                 public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
@@ -110,16 +145,17 @@ public class BudgetAdapter extends RecyclerView.Adapter<BudgetAdapter.ViewHolder
                         budget = Double.parseDouble(s.toString());
                     }
                     mList.get(getAdapterPosition()).setBudget(budget);
-                    saveToSharedPref(mList);
+                    saveDestToSharedPref(mList);
                 }
             });
+
+
 
             transportExpense_textView.addTextChangedListener(new TextWatcher() {
                 @Override
                 public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
                 @Override
                 public void onTextChanged(CharSequence s, int start, int before, int count) { }
-
                 @Override
                 public void afterTextChanged(Editable s) {
                     if(s.toString().matches("")) {
@@ -127,10 +163,13 @@ public class BudgetAdapter extends RecyclerView.Adapter<BudgetAdapter.ViewHolder
                     } else {
                         transportExpense = Double.parseDouble(s.toString());
                     }
-                    mList.get(getAdapterPosition()).setTransportExpense(transportExpense);
-                    saveToSharedPref(mList);
+
                 }
             });
+
+
+
+
 
             accomodationExpense_textView.addTextChangedListener(new TextWatcher() {
                 @Override
@@ -145,15 +184,17 @@ public class BudgetAdapter extends RecyclerView.Adapter<BudgetAdapter.ViewHolder
                     } else {
                         accomodationExpense = Double.parseDouble(s.toString());
                     }
-                    mList.get(getAdapterPosition()).setAccomodationExpense(accomodationExpense);
-                    saveToSharedPref(mList);
+                    /*
+                    expenseArrayList.get(getAdapterPosition()).setPrice(accomodationExpense);
+                    expenseArrayList.get(getAdapterPosition()).setLocation(mList.get(getAdapterPosition()).getCityName());
+                    saveExpenseToSharedPref(expenseArrayList);*/
                 }
             });
 
         }
     }
 
-    public void saveToSharedPref( ArrayList<Destination> list ) {
+    public void saveDestToSharedPref( ArrayList<Destination> list ) {
         SharedPreferences settings = mContext.getSharedPreferences("sharedPref", mContext.MODE_PRIVATE);
         SharedPreferences.Editor editor = settings.edit();
         Gson gson = new Gson();
@@ -161,6 +202,19 @@ public class BudgetAdapter extends RecyclerView.Adapter<BudgetAdapter.ViewHolder
         editor.putString("destination list", json);
         editor.apply();
     }
+
+    public void saveExpenseToSharedPref( ArrayList<Expense> list) {
+        SharedPreferences expSharedPref = PreferenceManager.getDefaultSharedPreferences(mContext);
+        SharedPreferences.Editor editor = expSharedPref.edit();
+        Gson gson = new Gson();
+        String json = gson.toJson(list);
+        editor.putString("expenseList", json);
+        Log.i("list",String.valueOf(expenseArrayList));
+        editor.apply();
+
+    }
+
+
 
 
 

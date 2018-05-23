@@ -87,7 +87,6 @@ public class HomeFragment extends Fragment {
         tripsRef.keepSynced(true);
 
         recyclerView = view.findViewById(R.id.home_recycler_view);
-        //recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setNestedScrollingEnabled(false);
@@ -95,9 +94,6 @@ public class HomeFragment extends Fragment {
         tripAdapter = new TripAdapter(getContext(),tripList);
 
         lastQuery = tripsRef.orderByKey();
-
-
-
         lastQuery.addChildEventListener(new ChildEventListener() {
 
             @Override
@@ -110,16 +106,13 @@ public class HomeFragment extends Fragment {
                 for (DataSnapshot childSnapshot: dataSnapshot.child("destinations").getChildren()) {
                     childSnapshot.getValue(Destination.class);
                     trip.addDestination(childSnapshot.getValue(Destination.class));
-                    Log.i("dest", childSnapshot.getValue(Destination.class).toString());
                 }
-
                 trip.setOwnerId(ownerId);
                 trip.setTripId(tripId);
                 trip.setTripName(tripName);
                 tripList.add(trip);
                 recyclerView.setAdapter(tripAdapter);
                 tripAdapter.notifyDataSetChanged();
-
             }
             @Override
             public void onChildChanged(DataSnapshot dataSnapshot, String s) {}
@@ -132,7 +125,6 @@ public class HomeFragment extends Fragment {
         });
 
         mSwipeRefreshLayout = view.findViewById(R.id.swipeRefreshLayout);
-
         mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
@@ -157,7 +149,6 @@ public class HomeFragment extends Fragment {
                 for (DataSnapshot childSnapshot: dataSnapshot.child("destinations").getChildren()) {
                     childSnapshot.getValue(Destination.class);
                     trip.addDestination(childSnapshot.getValue(Destination.class));
-                    Log.i("dest", childSnapshot.getValue(Destination.class).toString());
                 }
                 trip.setOwnerId(ownerId);
                 tripList.add(trip);

@@ -13,6 +13,15 @@ public class Trip {
     private int listSize;
     private String timestamp;
     private ArrayList<Destination> destinationArrayList = new ArrayList<Destination>();
+    private ArrayList<Expense> expenseArrayList = new ArrayList<Expense>();
+
+    public ArrayList<Expense> getExpenseArrayList() {
+        return expenseArrayList;
+    }
+
+    public void setExpenseArrayList(ArrayList<Expense> expenseArrayList) {
+        this.expenseArrayList = expenseArrayList;
+    }
 
     public Trip() {}
 

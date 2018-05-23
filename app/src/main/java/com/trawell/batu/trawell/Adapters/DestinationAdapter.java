@@ -20,6 +20,7 @@ import com.google.gson.Gson;
 import com.trawell.batu.trawell.Activity.NewTrip;
 import com.trawell.batu.trawell.Model.Destination;
 import com.trawell.batu.trawell.R;
+import com.trawell.batu.trawell.TaskManager.DateCalculation;
 import com.trawell.batu.trawell.TaskManager.MyEditTextDatePicker;
 
 import java.util.ArrayList;
@@ -132,6 +133,12 @@ public class DestinationAdapter extends RecyclerView.Adapter<DestinationAdapter.
                 public void afterTextChanged(Editable s) {
                     String outdate = s.toString();
                     mList.get(getAdapterPosition()).setCheckOutDate(outdate);
+
+                    DateCalculation dateCalculation = new DateCalculation();
+                    long daysBetween = dateCalculation.DaysBetweenDates(mList.get(getAdapterPosition()).getCheckInDate(),
+                            mList.get(getAdapterPosition()).getCheckOutDate());
+                    mList.get(getAdapterPosition()).setDaysSpent(daysBetween);
+
                     saveToSharedPref(mList);
                 }
             });

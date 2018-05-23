@@ -68,7 +68,6 @@ public class NewTrip extends AppCompatActivity {
         searchDestination_EditText  =    findViewById(R.id.search_editText);
         recyclerView                =    findViewById(R.id.recycler_view);
         saveTripButton              =    findViewById(R.id.save_button);
-        //addDestinationButton        =    findViewById(R.id.add_button);
         showMapButton               =    findViewById(R.id.show_map_button);
         tripName_EditText           =    findViewById(R.id.trip_name_edit);
 
@@ -99,15 +98,6 @@ public class NewTrip extends AppCompatActivity {
                 alertDialogCreator();
             }
         });
-        /*
-        addDestinationButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent searchIntent = new Intent(NewTrip.this, SearchDestination.class);
-                startActivity(searchIntent);
-            }
-        });
-        */
 
         saveTripButton.setOnClickListener(new View.OnClickListener() {
             @Override

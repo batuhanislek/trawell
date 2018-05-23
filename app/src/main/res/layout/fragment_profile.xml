@@ -11,15 +11,7 @@
         android:id="@+id/profile_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-        <!--
-        <ImageButton
-            android:id="@+id/action_close_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:padding="10dp"
-            app:srcCompat="@drawable/close_24dp"
-            android:background="@android:color/transparent"/>
-            -->
+
 
         <Button
             android:id="@+id/signout_profile_button"
@@ -47,33 +39,116 @@
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:layout_below="@id/profile_layout"
-        android:layout_centerHorizontal="true"
+        android:layout_marginLeft="20dp"
         android:layout_marginTop="20dp"
         android:src="@drawable/img"/>
+
+    <ImageButton
+        android:layout_width="10dp"
+        android:layout_height="9dp"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/profile_image"
+        android:layout_marginLeft="100dp"
+        app:srcCompat="@drawable/add_30dp" />
+
+    <TextView
+        android:id="@+id/profile_username"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/profile_layout"
+        android:layout_toRightOf="@id/profile_image"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="20dp"
+        android:textStyle="bold"
+        android:text="Username"/>
+
+    <TextView
+        android:id="@+id/profile_bio"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/profile_username"
+        android:layout_toRightOf="@id/profile_image"
+        android:layout_marginTop="5dp"
+        android:layout_marginLeft="20dp"
+        android:text="BIO"/>
+
+    <Button
+        android:id="@+id/follow_button"
+        android:layout_width="200dp"
+        android:layout_height="30dp"
+        android:layout_below="@id/profile_bio"
+        android:layout_toRightOf="@id/profile_image"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="35dp"
+        android:background="@android:color/holo_blue_bright"
+        android:textColor="@android:color/white"
+        android:textAllCaps="false"
+        android:visibility="invisible"
+        android:text="Follow"/>
+
+    <Button
+        android:id="@+id/edit_button"
+        android:layout_width="200dp"
+        android:layout_height="30dp"
+        android:layout_below="@id/profile_bio"
+        android:layout_toRightOf="@id/profile_image"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="35dp"
+        android:background="@android:color/holo_blue_bright"
+        android:textColor="@android:color/white"
+        android:textAllCaps="false"
+        android:text="Edit Profile"/>
 
 
     <LinearLayout
         android:id="@+id/follow_layout"
-        android:layout_below="@id/profile_image"
+        android:layout_toRightOf="@id/profile_image"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:layout_centerHorizontal="true"
+        android:layout_marginTop="150dp"
+        android:layout_marginLeft="35dp"
+        android:layout_below="@id/profile_layout"
         android:orientation="horizontal">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="100 Followers"
-            android:layout_marginRight="50dp"
+            android:text="0 Followers"
+            android:layout_marginRight="30dp"
             android:textColor="@android:color/black"/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="105 Following"
+            android:text="0 Following"
             android:textColor="@android:color/black"/>
     </LinearLayout>
+
+    <android.support.v4.app.FragmentTabHost
+        android:layout_below="@id/follow_layout"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        app:tabTextAppearance="@android:style/TextAppearance.Widget.TabWidget"
+        android:id="@android:id/tabhost"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="10dp">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <FrameLayout
+                android:id="@+id/realtabcontent"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1" />
+
+        </LinearLayout>
+    </android.support.v4.app.FragmentTabHost>
+
+
+
 
 
 

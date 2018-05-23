@@ -13,7 +13,7 @@ public class Destination {
     private int destination_Id;
     private String countryName, cityName, longitude, altitude, transportType;
     private String checkInDate, checkOutDate;
-    private double totalBudget, transportExpense, accomodationExpense, currentExpense, budget;
+    private double transportExpense, accomodationExpense, currentExpense, budget;
     private long daysSpent;
     private int countryFlag;
     private String ownerId;
@@ -51,14 +51,6 @@ public class Destination {
 
     public void setDaysSpent(long daysSpent) {
         this.daysSpent = daysSpent;
-    }
-
-    public double getTotalBudget() {
-        return totalBudget;
-    }
-
-    public void setTotalBudget(double totalBudget) {
-        this.totalBudget = totalBudget;
     }
 
     public double getTransportExpense() {

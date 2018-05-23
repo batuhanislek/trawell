@@ -19,7 +19,7 @@
             android:layout_marginTop="1dp"
             android:layout_marginLeft="10dp"
             app:srcCompat="@drawable/ic_image_black_24dp"
-            android:backgroundTint="@color/successGreen"
+            android:backgroundTint="@android:color/black"
             />
 
         <ImageButton
@@ -29,7 +29,7 @@
             android:layout_marginTop="1dp"
             android:layout_toRightOf="@id/load_image_button"
             app:srcCompat="@drawable/ic_monetization_on_black_24dp"
-            android:backgroundTint="@color/successGreen" />
+            android:backgroundTint="@android:color/black" />
 
 
         <Button
@@ -40,7 +40,18 @@
             android:layout_margin="5dp"
             android:background="@android:color/holo_blue_bright"
             android:textColor="@android:color/white"
+
             android:text="Publısh"/>
+
+        <ProgressBar
+            android:id="@+id/image_upload_progressBar"
+            android:layout_marginTop="8dp"
+            android:layout_marginRight="5dp"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_alignParentRight="true"
+            android:visibility="invisible"
+            />
 
         <View
             android:id="@+id/new_trip_line"
@@ -99,14 +110,14 @@
         android:hint="Select the destination"
         android:visibility="invisible"/>
 
-    <ScrollView
+    <android.support.v4.widget.NestedScrollView
         android:id="@+id/action_scrollview"
         android:layout_below="@id/select_dest_editText"
         android:layout_marginTop="5dp"
         android:scrollbars="vertical"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-    </ScrollView>
+        android:layout_height="match_parent">
+    </android.support.v4.widget.NestedScrollView>
 
 
 

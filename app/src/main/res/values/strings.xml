@@ -5,7 +5,7 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="transport_type">Transportation type</string>
     <string name="budget_plan">"Budget &amp; Expenses"</string>
-    
+
     <string-array name="expenseTypeList">
         <item>Choose expense type..</item>
         <item>Food &amp; Beverage</item>
@@ -14,5 +14,5 @@
         <item>Event</item>
         <item>Entertainment</item>
     </string-array>
-    
+
 </resources>

@@ -37,7 +37,8 @@
         <activity android:name=".Activity.ShowOnMap" />
         <activity android:name=".Activity.PlanBudget" />
         <activity android:name=".Activity.TravelActivity" />
-        <activity android:name=".Activity.SelectionActivity"></activity>
+        <activity android:name=".Activity.SelectionActivity" />
+        <activity android:name=".Activity.EditProfileActivity"></activity>
     </application>
 
 </manifest>
