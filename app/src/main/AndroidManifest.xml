@@ -38,7 +38,8 @@
         <activity android:name=".Activity.PlanBudget" />
         <activity android:name=".Activity.TravelActivity" />
         <activity android:name=".Activity.SelectionActivity" />
-        <activity android:name=".Activity.EditProfileActivity"></activity>
+        <activity android:name=".Activity.EditProfileActivity" />
+        <activity android:name=".Activity.ShowExpensesActivity"></activity>
     </application>
 
 </manifest>

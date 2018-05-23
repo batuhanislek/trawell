@@ -1,5 +1,6 @@
 package com.trawell.batu.trawell.Fragments;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -19,6 +20,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 
+import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
@@ -30,6 +32,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.trawell.batu.trawell.Activity.ShowExpensesActivity;
 import com.trawell.batu.trawell.Model.ChartExpenseItem;
 import com.trawell.batu.trawell.Model.Expense;
 import com.trawell.batu.trawell.R;
@@ -99,24 +102,23 @@ public class CurrentFragment extends Fragment {
                     Log.i("tripID",tripId);
                     loadTripExpenseBudgetData();
 
-
-
-
-
                 } else {
                     showExpensesButton.setVisibility(View.INVISIBLE);
                     contentLayout.setVisibility(View.INVISIBLE);
                 }
-
-
             }
             @Override
             public void onNothingSelected(AdapterView<?> parent) {}
         });
 
-
-
-
+        showExpensesButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent showExpensesIntent = new Intent(getContext(), ShowExpensesActivity.class);
+                showExpensesIntent.putExtra("tripId", tripId);
+                startActivity(showExpensesIntent);
+            }
+        });
 
 
 
@@ -180,7 +182,6 @@ public class CurrentFragment extends Fragment {
             @Override
             public void onCancelled(DatabaseError databaseError) {}
         });
-
     }
 
     public void drawPieChart(ArrayList<Expense> list) {
@@ -251,44 +252,11 @@ public class CurrentFragment extends Fragment {
 
     public void drawLineChart() {
 
+        LineChart lineChart = (LineChart) view.findViewById(R.id.line_chart);
+
+
     }
 
-    private class AsyncTaskRunner extends AsyncTask<String, String, String> {
-
-        private String resp;
-        @Override
-        protected String doInBackground(String... params) {
-            //publishProgress("Sleeping..."); // Calls onProgressUpdate()
-            try {
-                while(tripId == null) {
-
-                }
-                resp = tripId;
-            } catch (Exception e) {
-                e.printStackTrace();
-                resp = e.getMessage();
-            }
-            return resp;
-        }
-
-
-        @Override
-        protected void onPostExecute(String result) {
-
-        }
-
-
-        @Override
-        protected void onPreExecute() {
-
-        }
-
-
-        @Override
-        protected void onProgressUpdate(String... text) {
-
-        }
-    }
 
 
 
