@@ -9,9 +9,11 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -33,10 +35,11 @@ public class TripAdapter extends RecyclerView.Adapter<TripAdapter.ViewHolder> {
 
     private Context mContext;
     private ArrayList<Trip> mList;
-    private DatabaseReference userRef;
-    private DatabaseReference tripRef;
-    private  int counter=0;
+    private DatabaseReference userRef, tripRef, likeRef;
+    private FirebaseAuth mAuth;
+    private int counter=0;
     private String username, ownerId;
+    private Boolean isLiked = false;
 
     public TripAdapter(Context context, ArrayList<Trip> list) {
         mContext = context;
@@ -51,8 +54,11 @@ public class TripAdapter extends RecyclerView.Adapter<TripAdapter.ViewHolder> {
         View view = layoutInflater.inflate(R.layout.travel_card, parent, false);
         TripAdapter.ViewHolder viewHolder = new TripAdapter.ViewHolder(view);
 
+        mAuth = FirebaseAuth.getInstance();
         tripRef = FirebaseDatabase.getInstance().getReference("Trips");
         userRef = FirebaseDatabase.getInstance().getReference("Users");
+        likeRef = FirebaseDatabase.getInstance().getReference("Likes");
+        likeRef.keepSynced(true);
 
 
         return viewHolder;
@@ -62,19 +68,28 @@ public class TripAdapter extends RecyclerView.Adapter<TripAdapter.ViewHolder> {
     public void onBindViewHolder(@NonNull TripAdapter.ViewHolder holder, final int position) {
 
         final Trip destItem = getItem(position);
+        final Trip item = getItemNormal(position);
 
         final TextView usernameTextView = holder.usernameTextView;
         final TextView routeTextView = holder.routeTextView;
 
         final TextView timeSpentTextView = holder.timeSpentTextView;
         final ImageView travelCardImage = holder.travelCardImage;
+        final ImageButton likeButton = holder.likeButton;
 
-        ownerId = destItem.getOwnerId();
-        //Log.i("ownerId",ownerId);
+        final String tripId = item.getTripId() == null ? "": item.getTripId();
+        final String userId = mAuth.getUid() == null ? "": mAuth.getUid();
+        holder.setLikeButton(tripId, userId);
+
+        ownerId = destItem.getOwnerId() == null ? "": destItem.getOwnerId();
+        Log.i("ownerId",ownerId);
 
         backgroundColorPicker(travelCardImage);
 
         DatabaseReference ownerRef = userRef.child(ownerId);
+        DatabaseReference likeRef = tripRef.child("likeCount");
+
+
 
         ownerRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -96,7 +111,7 @@ public class TripAdapter extends RecyclerView.Adapter<TripAdapter.ViewHolder> {
                 routeTextView.setText(firstLocation);
                 break;
             case 2:
-                routeTextView.setText(firstLocation +" - " +lastLocation);
+                routeTextView.setText(firstLocation+" - " +lastLocation);
                 break;
                 default:
                     routeTextView.setText(firstLocation + " - " +
@@ -114,7 +129,11 @@ public class TripAdapter extends RecyclerView.Adapter<TripAdapter.ViewHolder> {
 
     }
     public Trip getItem(int arg0) {
-        return mList.get(getItemCount() - arg0 - 1);
+        return mList.get(getItemCount() - arg0 -1);
+    }
+
+    public Trip getItemNormal(int arg0) {
+        return mList.get(arg0);
     }
 
     @Override
@@ -129,6 +148,58 @@ public class TripAdapter extends RecyclerView.Adapter<TripAdapter.ViewHolder> {
         TextView routeTextView;
         TextView timeSpentTextView;
         ImageView travelCardImage;
+        ImageButton likeButton;
+
+        public void setLikeButton(final String tripId, final String userId) {
+            Log.i("tripss", tripId);
+            likeRef.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    if (dataSnapshot.child(tripId).hasChild(userId)) {
+                        likeButton.setImageResource(R.drawable.ic_favorite_red_24dp);
+                    } else {
+                        likeButton.setImageResource(R.drawable.like_24dp);
+                    }
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+
+                }
+            });
+
+            likeButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Log.i("Liked-tripId", tripId);
+                    Log.i("liked-who",mAuth.getUid());
+
+                    isLiked = true;
+
+                    likeRef.addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+                            if(isLiked) {
+                                if (dataSnapshot.child(tripId).hasChild(userId)) {
+                                    likeRef.child(tripId).child(userId).removeValue();
+                                    likeButton.setImageResource(R.drawable.like_24dp);
+                                    isLiked = false;
+
+                                } else {
+                                    likeButton.setImageResource(R.drawable.ic_favorite_red_24dp);
+                                    likeRef.child(tripId).child(userId).setValue("X");
+                                    isLiked = false;
+                                }
+                            }
+                        }
+
+                        @Override
+                        public void onCancelled(DatabaseError databaseError) { }
+                    });
+
+                }
+            });
+        }
 
         public ViewHolder(final View itemView) {
             super(itemView);
@@ -137,6 +208,11 @@ public class TripAdapter extends RecyclerView.Adapter<TripAdapter.ViewHolder> {
             routeTextView = itemView.findViewById(R.id.route);
             timeSpentTextView = itemView.findViewById(R.id.time_spent);
             travelCardImage = itemView.findViewById(R.id.travelcard_image);
+            likeButton = itemView.findViewById(R.id.like_button);
+
+
+
+
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -159,8 +235,6 @@ public class TripAdapter extends RecyclerView.Adapter<TripAdapter.ViewHolder> {
                         @Override
                         public void onCancelled(DatabaseError databaseError) {}
                     });
-
-
                     travelIntent.putExtra("ownerId", t.getOwnerId());
                     itemView.getContext().startActivity(travelIntent);
                 }

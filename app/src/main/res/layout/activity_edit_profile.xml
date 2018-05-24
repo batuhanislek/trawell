@@ -1,9 +1,105 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".Activity.EditProfileActivity">
 
-</android.support.constraint.ConstraintLayout>
+    <RelativeLayout
+        android:id="@+id/edit_profile_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+
+        <ImageButton
+            android:id="@+id/edit_profile_close_button"
+            android:layout_alignParentRight="true"
+            android:layout_width="40dp"
+            android:layout_height="30dp"
+            android:layout_margin="10dp"
+            android:background="@android:color/transparent"
+            app:srcCompat="@drawable/close_24dp"
+            />
+
+        <View
+            android:id="@+id/edit_profile_line"
+            android:layout_width="wrap_content"
+            android:layout_below="@id/edit_profile_close_button"
+            android:layout_height="1dp"
+            android:background="#A4A4A4" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/edit_profile_content"
+        android:layout_below="@+id/edit_profile_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/profile_edit_image"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="15dp"
+            android:src="@drawable/defaultavatar"/>
+
+
+
+        <TextView
+            android:id="@+id/user_name_headline"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="30dp"
+            android:textStyle="bold"
+            android:layout_marginTop="30dp"
+            android:layout_below="@id/profile_edit_image"
+            style="@style/TextAppearance.AppCompat.Caption"
+            android:text="Username"/>
+
+        <EditText
+            android:id="@+id/username_edit_edittext"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:textSize="15sp"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@id/user_name_headline"
+            />
+
+        <TextView
+            android:id="@+id/bio_headline"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="30dp"
+            android:layout_marginTop="5dp"
+            android:textStyle="bold"
+            android:layout_below="@id/username_edit_edittext"
+            style="@style/TextAppearance.AppCompat.Caption"
+            android:text="Bio"/>
+
+        <EditText
+            android:id="@+id/bio_edittext"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:textSize="15sp"
+            android:layout_below="@id/bio_headline" />
+
+        <Button
+            android:layout_marginTop="40dp"
+            android:layout_below="@id/bio_edittext"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:background="@color/successGreen"
+            android:textColor="@android:color/white"
+            android:text="SAVE"/>
+
+
+
+
+    </RelativeLayout>
+
+
+
+</RelativeLayout>

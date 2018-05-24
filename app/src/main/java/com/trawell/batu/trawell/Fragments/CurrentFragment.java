@@ -58,6 +58,8 @@ public class CurrentFragment extends Fragment {
     RelativeLayout contentLayout;
     String tripId;
     String selectedTrip;
+    PieChart pieChart;
+    TextView noData;
     double foodBevExp=0, transportExp=0, accomExp=0, eventExp=0, entertExp=0;
 
     public CurrentFragment() {
@@ -74,7 +76,8 @@ public class CurrentFragment extends Fragment {
 
         showExpensesButton = view.findViewById(R.id.show_all_button);
         contentLayout = view.findViewById(R.id.current_content_layout);
-        showExpensesButton.setVisibility(View.INVISIBLE);
+        noData = view.findViewById(R.id.no_data_textview);
+        pieChart = view.findViewById(R.id.pie_chart);
 
         mAuth = FirebaseAuth.getInstance();
         String currentUserId = mAuth.getCurrentUser().getUid();
@@ -97,7 +100,6 @@ public class CurrentFragment extends Fragment {
 
                 if(!selectedTrip.equals("Select a trip")) {
                     tripId = tripIdList.get(tripNames.indexOf(selectedTrip)-1);
-                    showExpensesButton.setVisibility(View.VISIBLE);
                     contentLayout.setVisibility(View.VISIBLE);
                     Log.i("tripID",tripId);
                     loadTripExpenseBudgetData();
@@ -177,7 +179,18 @@ public class CurrentFragment extends Fragment {
                 for (DataSnapshot childSnapshot: dataSnapshot.getChildren()) {
                     expenseArrayList.add(childSnapshot.getValue(Expense.class));
                 }
-                drawPieChart(expenseArrayList);
+                if(expenseArrayList.size() > 0) {
+                    showExpensesButton.setVisibility(View.VISIBLE);
+                    noData.setVisibility(View.INVISIBLE);
+                    pieChart.setVisibility(View.VISIBLE);
+                    drawPieChart(expenseArrayList);
+                } else {
+                    showExpensesButton.setVisibility(View.INVISIBLE);
+                    pieChart.setVisibility(View.INVISIBLE);
+                    noData.setVisibility(View.VISIBLE);
+                    noData.setText("No expense data entered.");
+                }
+
             }
             @Override
             public void onCancelled(DatabaseError databaseError) {}
@@ -198,7 +211,7 @@ public class CurrentFragment extends Fragment {
             Log.i("list", list.get(x).toString());
         }
 
-        PieChart pieChart = (PieChart) view.findViewById(R.id.pie_chart);
+
         pieChart.setDescription(null);
 
         for (int i=0; i < list.size(); i++) {

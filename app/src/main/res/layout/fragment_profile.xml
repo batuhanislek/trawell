@@ -1,17 +1,16 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context="com.trawell.batu.trawell.Fragments.ProfileFragment">
 
-    <!-- TODO: Update blank fragment layout -->
 
     <RelativeLayout
         android:id="@+id/profile_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-
 
         <Button
             android:id="@+id/signout_profile_button"
@@ -32,119 +31,127 @@
             android:background="#A4A4A4" />
     </RelativeLayout>
 
-
-
-    <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/profile_image"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
+    <android.support.v4.widget.NestedScrollView
         android:layout_below="@id/profile_layout"
-        android:layout_marginLeft="20dp"
-        android:layout_marginTop="20dp"
-        android:src="@drawable/img"/>
-
-    <TextView
-        android:id="@+id/profile_username"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/profile_layout"
-        android:layout_toRightOf="@id/profile_image"
-        android:layout_marginTop="20dp"
-        android:layout_marginLeft="20dp"
-        android:textStyle="bold"
-        android:text="Username"/>
-
-    <TextView
-        android:id="@+id/profile_bio"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/profile_username"
-        android:layout_toRightOf="@id/profile_image"
-        android:layout_marginTop="5dp"
-        android:layout_marginLeft="20dp"
-        android:text="BIO"/>
-
-    <Button
-        android:id="@+id/follow_button"
-        android:layout_width="200dp"
-        android:layout_height="30dp"
-        android:layout_below="@id/profile_bio"
-        android:layout_toRightOf="@id/profile_image"
-        android:layout_marginLeft="20dp"
-        android:layout_marginTop="35dp"
-        android:background="@android:color/holo_blue_bright"
-        android:textColor="@android:color/white"
-        android:textAllCaps="false"
-        android:visibility="invisible"
-        android:text="Follow"/>
-
-    <Button
-        android:id="@+id/edit_button"
-        android:layout_width="200dp"
-        android:layout_height="30dp"
-        android:layout_below="@id/profile_bio"
-        android:layout_toRightOf="@id/profile_image"
-        android:layout_marginLeft="20dp"
-        android:layout_marginTop="35dp"
-        android:background="@android:color/holo_blue_bright"
-        android:textColor="@android:color/white"
-        android:textAllCaps="false"
-        android:text="Edit Profile"/>
-
-
-    <LinearLayout
-        android:id="@+id/follow_layout"
-        android:layout_toRightOf="@id/profile_image"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="150dp"
-        android:layout_marginLeft="35dp"
-        android:layout_below="@id/profile_layout"
-        android:orientation="horizontal">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="0 Followers"
-            android:layout_marginRight="30dp"
-            android:textColor="@android:color/black"/>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="0 Following"
-            android:textColor="@android:color/black"/>
-    </LinearLayout>
-
-    <android.support.v4.app.FragmentTabHost
-        android:layout_below="@id/follow_layout"
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        app:tabTextAppearance="@android:style/TextAppearance.Widget.TabWidget"
-        android:id="@android:id/tabhost"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="10dp">
+        android:layout_height="match_parent">
 
-        <LinearLayout
-            android:orientation="vertical"
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <FrameLayout
-                android:id="@+id/realtabcontent"
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/profile_image"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="15dp"
+                android:src="@drawable/defaultavatar"/>
+
+            <TextView
+                android:id="@+id/profile_username"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                android:layout_toRightOf="@id/profile_image"
+                android:layout_marginTop="12dp"
+                android:layout_marginLeft="20dp"
+                android:textStyle="bold"
+                android:text="Username"/>
+
+            <TextView
+                android:id="@+id/profile_bio"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/profile_username"
+                android:layout_toRightOf="@id/profile_image"
+                android:layout_marginTop="5dp"
+                android:layout_marginLeft="20dp"
+                android:text="BIO"/>
+
+            <Button
+                android:id="@+id/follow_button"
+                android:layout_width="200dp"
+                android:layout_height="30dp"
+                android:layout_below="@id/profile_bio"
+                android:layout_toRightOf="@id/profile_image"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="30dp"
+                android:background="@android:color/holo_blue_bright"
+                android:textColor="@android:color/white"
+                android:textAllCaps="false"
+                android:visibility="invisible"
+                android:text="Follow"/>
+
+            <Button
+                android:id="@+id/edit_button"
+                android:layout_width="200dp"
+                android:layout_height="30dp"
+                android:layout_below="@id/profile_bio"
+                android:layout_toRightOf="@id/profile_image"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="30dp"
+                android:background="@android:color/holo_blue_bright"
+                android:textColor="@android:color/white"
+                android:textAllCaps="false"
+                android:text="Edit Profile"/>
+
+
+            <LinearLayout
+                android:id="@+id/follow_layout"
+                android:layout_toRightOf="@id/profile_image"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="125dp"
+                android:layout_marginLeft="35dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="0 Followers"
+                    android:layout_marginRight="30dp"
+                    android:textColor="@android:color/black"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="0 Following"
+                    android:textColor="@android:color/black"/>
+            </LinearLayout>
+
+            <android.support.v4.app.FragmentTabHost
+                android:layout_below="@id/follow_layout"
+                app:tabTextAppearance="@android:style/Widget.TabWidget"
+                android:id="@android:id/tabhost"
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1" />
+                android:layout_height="wrap_content"
+                android:layout_marginTop="25dp">
 
-        </LinearLayout>
-    </android.support.v4.app.FragmentTabHost>
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <LinearLayout
+                        android:id="@+id/realtabcontent"
+                        android:layout_marginTop="55dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+                    </LinearLayout>
+
+                </LinearLayout>
+            </android.support.v4.app.FragmentTabHost>
+
+
+        </RelativeLayout>
 
 
 
 
 
-
-
+    </android.support.v4.widget.NestedScrollView>
 
 
 

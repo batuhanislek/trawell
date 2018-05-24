@@ -12,6 +12,7 @@ public class Trip {
     private String tripName;
     private int listSize;
     private String timestamp;
+    private long likeCount=0;
     private ArrayList<Destination> destinationArrayList = new ArrayList<Destination>();
     private ArrayList<Expense> expenseArrayList = new ArrayList<Expense>();
 
@@ -25,6 +26,13 @@ public class Trip {
 
     public Trip() {}
 
+    public long getLikeCount() {
+        return likeCount;
+    }
+
+    public void setLikeCount(long likeCount) {
+        this.likeCount = likeCount;
+    }
 
     public String getTripId() {
         return tripId;
