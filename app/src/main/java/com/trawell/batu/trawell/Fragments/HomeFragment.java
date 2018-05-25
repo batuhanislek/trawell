@@ -81,6 +81,8 @@ public class HomeFragment extends Fragment {
         });
 
 
+
+
         tripList = new ArrayList<Trip>();
 
         tripsRef = FirebaseDatabase.getInstance().getReference("Trips");
@@ -91,11 +93,13 @@ public class HomeFragment extends Fragment {
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setNestedScrollingEnabled(false);
 
+
+
+
         tripAdapter = new TripAdapter(getContext(),tripList);
 
         lastQuery = tripsRef.orderByKey();
         lastQuery.addChildEventListener(new ChildEventListener() {
-
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                 Trip trip = new Trip();
@@ -140,11 +144,12 @@ public class HomeFragment extends Fragment {
     void refreshItems() {
         tripList.clear();
         lastQuery.addChildEventListener(new ChildEventListener() {
-
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                 Trip trip = new Trip();
                 String ownerId = ((String) dataSnapshot.child("ownerId").getValue());
+                String tripId = ((String) dataSnapshot.child("tripId").getValue());
+                String tripName = ((String) dataSnapshot.child("tripName").getValue());
 
                 for (DataSnapshot childSnapshot: dataSnapshot.child("destinations").getChildren()) {
                     childSnapshot.getValue(Destination.class);
@@ -152,6 +157,8 @@ public class HomeFragment extends Fragment {
                 }
                 trip.setOwnerId(ownerId);
                 tripList.add(trip);
+                trip.setTripId(tripId);
+                trip.setTripName(tripName);
                 recyclerView.setAdapter(tripAdapter);
                 tripAdapter.notifyDataSetChanged();
             }

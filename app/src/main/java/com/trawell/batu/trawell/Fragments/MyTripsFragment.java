@@ -60,8 +60,9 @@ public class MyTripsFragment extends Fragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setNestedScrollingEnabled(false);
-        tripAdapter = new TripAdapter(getContext(), tripList);
         getUserId();
+        tripAdapter = new TripAdapter(getContext(), tripList);
+
 
         return view;
     }
@@ -88,7 +89,6 @@ public class MyTripsFragment extends Fragment {
     }
 
     public void getMyTripsContent() {
-
         for(int i = 0; i < tripIdList.size(); i++) {
             String tripId = tripIdList.get(i);
             Log.i("selectedTripID",tripId);

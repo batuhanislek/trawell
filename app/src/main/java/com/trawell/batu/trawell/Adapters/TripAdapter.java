@@ -3,6 +3,7 @@ package com.trawell.batu.trawell.Adapters;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.media.Image;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -35,11 +36,11 @@ public class TripAdapter extends RecyclerView.Adapter<TripAdapter.ViewHolder> {
 
     private Context mContext;
     private ArrayList<Trip> mList;
-    private DatabaseReference userRef, tripRef, likeRef;
+    private DatabaseReference userRef, tripRef, likeRef, followRef;
     private FirebaseAuth mAuth;
     private int counter=0;
     private String username, ownerId;
-    private Boolean isLiked = false;
+    private Boolean isLiked = false, isFollowed=false;
 
     public TripAdapter(Context context, ArrayList<Trip> list) {
         mContext = context;
@@ -58,7 +59,9 @@ public class TripAdapter extends RecyclerView.Adapter<TripAdapter.ViewHolder> {
         tripRef = FirebaseDatabase.getInstance().getReference("Trips");
         userRef = FirebaseDatabase.getInstance().getReference("Users");
         likeRef = FirebaseDatabase.getInstance().getReference("Likes");
+        followRef = FirebaseDatabase.getInstance().getReference("Follows");
         likeRef.keepSynced(true);
+        followRef.keepSynced(true);
 
 
         return viewHolder;
@@ -68,28 +71,25 @@ public class TripAdapter extends RecyclerView.Adapter<TripAdapter.ViewHolder> {
     public void onBindViewHolder(@NonNull TripAdapter.ViewHolder holder, final int position) {
 
         final Trip destItem = getItem(position);
-        final Trip item = getItemNormal(position);
 
         final TextView usernameTextView = holder.usernameTextView;
         final TextView routeTextView = holder.routeTextView;
-
         final TextView timeSpentTextView = holder.timeSpentTextView;
         final ImageView travelCardImage = holder.travelCardImage;
         final ImageButton likeButton = holder.likeButton;
+        final ImageButton followButton = holder.followButton;
 
-        final String tripId = item.getTripId() == null ? "": item.getTripId();
+
+        //DatabaseReference likeRef = tripRef.child("likeCount");
+
+        final String tripId = destItem.getTripId() == null ? "": destItem.getTripId();
         final String userId = mAuth.getUid() == null ? "": mAuth.getUid();
         holder.setLikeButton(tripId, userId);
+        holder.setFollowButton(tripId,userId);
 
         ownerId = destItem.getOwnerId() == null ? "": destItem.getOwnerId();
-        Log.i("ownerId",ownerId);
-
-        backgroundColorPicker(travelCardImage);
-
         DatabaseReference ownerRef = userRef.child(ownerId);
-        DatabaseReference likeRef = tripRef.child("likeCount");
-
-
+        backgroundColorPicker(travelCardImage);
 
         ownerRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -129,7 +129,7 @@ public class TripAdapter extends RecyclerView.Adapter<TripAdapter.ViewHolder> {
 
     }
     public Trip getItem(int arg0) {
-        return mList.get(getItemCount() - arg0 -1);
+        return mList.get(arg0);
     }
 
     public Trip getItemNormal(int arg0) {
@@ -148,10 +148,9 @@ public class TripAdapter extends RecyclerView.Adapter<TripAdapter.ViewHolder> {
         TextView routeTextView;
         TextView timeSpentTextView;
         ImageView travelCardImage;
-        ImageButton likeButton;
+        ImageButton likeButton, followButton;
 
         public void setLikeButton(final String tripId, final String userId) {
-            Log.i("tripss", tripId);
             likeRef.addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
@@ -161,11 +160,8 @@ public class TripAdapter extends RecyclerView.Adapter<TripAdapter.ViewHolder> {
                         likeButton.setImageResource(R.drawable.like_24dp);
                     }
                 }
-
                 @Override
-                public void onCancelled(DatabaseError databaseError) {
-
-                }
+                public void onCancelled(DatabaseError databaseError) { }
             });
 
             likeButton.setOnClickListener(new View.OnClickListener() {
@@ -173,9 +169,7 @@ public class TripAdapter extends RecyclerView.Adapter<TripAdapter.ViewHolder> {
                 public void onClick(View v) {
                     Log.i("Liked-tripId", tripId);
                     Log.i("liked-who",mAuth.getUid());
-
                     isLiked = true;
-
                     likeRef.addValueEventListener(new ValueEventListener() {
                         @Override
                         public void onDataChange(DataSnapshot dataSnapshot) {
@@ -184,21 +178,65 @@ public class TripAdapter extends RecyclerView.Adapter<TripAdapter.ViewHolder> {
                                     likeRef.child(tripId).child(userId).removeValue();
                                     likeButton.setImageResource(R.drawable.like_24dp);
                                     isLiked = false;
-
                                 } else {
                                     likeButton.setImageResource(R.drawable.ic_favorite_red_24dp);
-                                    likeRef.child(tripId).child(userId).setValue("X");
+                                    likeRef.child(tripId).child(userId).setValue("liked");
                                     isLiked = false;
                                 }
                             }
                         }
-
                         @Override
                         public void onCancelled(DatabaseError databaseError) { }
                     });
 
                 }
             });
+        }
+
+        public void setFollowButton(final String tripId, final String userId) {
+
+            followRef.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    if (dataSnapshot.child(tripId).hasChild(userId)) {
+                        followButton.setImageResource(R.drawable.ic_bookmark_green_24dp);
+                    } else {
+                        followButton.setImageResource(R.drawable.bookmark_24dp);
+                    }
+                }
+                @Override
+                public void onCancelled(DatabaseError databaseError) { }
+            });
+
+            followButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Log.i("followed-tripId", tripId);
+                    Log.i("follow-who",mAuth.getUid());
+                    isFollowed = true;
+                    followRef.addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+                            if(isFollowed) {
+                                if (dataSnapshot.child(tripId).hasChild(userId)) {
+                                    followRef.child(tripId).child(userId).removeValue();
+                                    followButton.setImageResource(R.drawable.bookmark_24dp);
+                                    isFollowed = false;
+                                } else {
+                                    followButton.setImageResource(R.drawable.ic_bookmark_green_24dp);
+                                    followRef.child(tripId).child(userId).setValue("followed");
+                                    isFollowed = false;
+                                }
+                            }
+                        }
+                        @Override
+                        public void onCancelled(DatabaseError databaseError) { }
+                    });
+
+                }
+            });
+
+
         }
 
         public ViewHolder(final View itemView) {
@@ -209,10 +247,7 @@ public class TripAdapter extends RecyclerView.Adapter<TripAdapter.ViewHolder> {
             timeSpentTextView = itemView.findViewById(R.id.time_spent);
             travelCardImage = itemView.findViewById(R.id.travelcard_image);
             likeButton = itemView.findViewById(R.id.like_button);
-
-
-
-
+            followButton = itemView.findViewById(R.id.follow_button);
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override

@@ -171,7 +171,6 @@ public class CurrentFragment extends Fragment {
     }
 
     public void loadTripExpenseBudgetData() {
-        Log.i("postID",tripId);
         tripsRef.child(tripId).child("expenseList").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -180,10 +179,11 @@ public class CurrentFragment extends Fragment {
                     expenseArrayList.add(childSnapshot.getValue(Expense.class));
                 }
                 if(expenseArrayList.size() > 0) {
-                    showExpensesButton.setVisibility(View.VISIBLE);
-                    noData.setVisibility(View.INVISIBLE);
                     pieChart.setVisibility(View.VISIBLE);
                     drawPieChart(expenseArrayList);
+                    showExpensesButton.setVisibility(View.VISIBLE);
+                    noData.setVisibility(View.INVISIBLE);
+
                 } else {
                     showExpensesButton.setVisibility(View.INVISIBLE);
                     pieChart.setVisibility(View.INVISIBLE);
@@ -207,19 +207,14 @@ public class CurrentFragment extends Fragment {
 
         List<PieEntry> itemList = new ArrayList<>();
 
-        for(int x =0; x < list.size(); x++) {
-            Log.i("list", list.get(x).toString());
-        }
-
-
         pieChart.setDescription(null);
 
         for (int i=0; i < list.size(); i++) {
             String type = list.get(i).getType();
             Double price = list.get(i).getPrice();
-
+            Log.i("elem", list.get(i).getType() + " " + String.valueOf(list.get(i).getPrice()));
             switch (type){
-                case "Accomodation":
+                case "Accommodation":
                     accomExp += price;
                     break;
                 case "Food & Beverage":
@@ -238,9 +233,8 @@ public class CurrentFragment extends Fragment {
                     break;
             }
         }
-
         if(accomExp != 0) {
-            itemList.add(new PieEntry(((float) accomExp),"Acc."));
+            itemList.add(new PieEntry(((float) accomExp),"Accomm."));
         }
         if(transportExp != 0) {
             itemList.add(new PieEntry(((float) transportExp),"Transport."));

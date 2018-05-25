@@ -218,6 +218,7 @@
             </LinearLayout>
 
                 <ImageButton
+                    android:id="@+id/follow_button"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     app:srcCompat="@drawable/bookmark_24dp"

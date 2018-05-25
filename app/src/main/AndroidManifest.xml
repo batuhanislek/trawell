@@ -39,7 +39,8 @@
         <activity android:name=".Activity.TravelActivity" />
         <activity android:name=".Activity.SelectionActivity" />
         <activity android:name=".Activity.EditProfileActivity" />
-        <activity android:name=".Activity.ShowExpensesActivity"></activity>
+        <activity android:name=".Activity.ShowExpensesActivity" />
+        <activity android:name=".Activity.CommentActivity"></activity>
     </application>
 
 </manifest>
