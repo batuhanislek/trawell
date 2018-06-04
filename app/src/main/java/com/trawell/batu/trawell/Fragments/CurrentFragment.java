@@ -190,7 +190,6 @@ public class CurrentFragment extends Fragment {
                     noData.setVisibility(View.VISIBLE);
                     noData.setText("No expense data entered.");
                 }
-
             }
             @Override
             public void onCancelled(DatabaseError databaseError) {}

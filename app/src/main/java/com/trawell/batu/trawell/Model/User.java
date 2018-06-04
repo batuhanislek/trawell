@@ -15,8 +15,7 @@ public class User {
     private String email;
     private ArrayList<String> tripIdList;
 
-    public User() {
-    }
+    public User() { }
 
     public String getUsername() {
         return username;

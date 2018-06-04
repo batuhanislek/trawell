@@ -14,9 +14,7 @@ public class DiscoverFragment extends Fragment {
 
     private RelativeLayout actionBar;
 
-    public DiscoverFragment() {
-        // Required empty public constructor
-    }
+    public DiscoverFragment() { }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
